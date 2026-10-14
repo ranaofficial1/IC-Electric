@@ -84,7 +84,7 @@ function SearchField({ onDone }) {
           <option>Lighting Solutions</option>
           <option>Kitchen Appliances</option>
         </select> */}
-        <div className="w-px h-5 bg-border-subtle mr-3"></div>
+        {/* <div className="w-px h-5 bg-border-subtle mr-3"></div> */}
         <input
           aria-label="Search products"
           className="w-full bg-transparent text-body-md font-body-md text-on-surface placeholder:text-text-muted outline-none"

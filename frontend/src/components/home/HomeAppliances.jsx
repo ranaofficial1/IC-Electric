@@ -55,8 +55,8 @@ export default function HomeAppliances() {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <div className="rounded-xl overflow-hidden shadow-md">
-                <img alt="Crompton Brio Dry Iron & Home Care Application" className="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1W7EJdNNo5yj_5QReSgLCL79mJZlc_Cv28Mqh7JAGDbJwtir3rZzLuvb-8n9iGQDUOmCTaJYMo7g6td3OjCBsr0Gq9oG9wOY4CyqCExcAq8sWzl9dRzq9eymniaU8zzdBDsplPxN06qWbDkdcixv2DviqvSIE4G0KYl3lhDtZ8-GUR7tZymkKm-7Y6ApDRfKXD8yj-iwoXkGInrXYwEiroDh_WShPksLS1jKVM6pPodrL-goLGpE2UvqUk" />
+              <div className="rounded-xl overflow-hidden">
+                <img alt="Crompton Brio Dry Iron & Home Care Application" className="w-full h-64 object-cover" src="https://anuragtraders.com/wp-content/uploads/Home-Applications-Slide-Banner.webp" />
               </div>
             </div>
           </div>

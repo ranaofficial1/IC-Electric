@@ -39,14 +39,14 @@ export default function FansMenu() {
               )}
               <div className="absolute inset-x-0 bottom-0 p-5 text-on-primary">
                 {c.series && (
-                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary-container">
+                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary-container">
                     {c.series}
                   </span>
                 )}
                 <div className="font-headline-sm text-headline-sm">{sub.name}</div>
-                <p className="mt-1 line-clamp-2 font-body-sm text-body-sm text-on-primary-container">
+                {/* <p className="mt-1 line-clamp-2 font-body-sm text-body-sm text-on-primary-container">
                   {c.blurb || sub.description || node.description}
-                </p>
+                </p> */}
                 <span className="mt-2 inline-flex items-center gap-1 font-label-md text-label-md font-bold">
                   Shop {sub.name}
                   <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1">arrow_forward</span>

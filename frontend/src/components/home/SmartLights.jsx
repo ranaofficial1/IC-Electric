@@ -97,7 +97,7 @@ export default function SmartLights() {
                 </div>
               </div>
               <div className="lg:col-span-5 relative h-64 lg:h-full min-h-[220px] overflow-hidden">
-                <img alt="Home lighting reimagined with Crompton lights banner" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida/AEtjO1XJFTwOeFS7bKjPcO9FEGZMZasfICprvFoAt8gBajohMVvZWF90_ijxTxdrTmE_z1CK1kZ2bh99G79HF0Vsel0it8KFUIaz26dt8ESnwHkGwfFNBmwfFPR9bdUamqNwJjfGqg9quZKfcWn0-DXwuINgeU5NqeeUSA29nqC6E_GPycf_BhZq9JEV_rz6LReZ29bUlPmO5OZIkp7o0zAB20NFM4gI76qlJyva8NU0XxwWToRuqkCn9LfJmAc" />
+                <img alt="Home lighting reimagined with Crompton lights banner" className="w-full h-full object-left group-hover:scale-105 transition-transform duration-700" src="https://anuragtraders.com/wp-content/uploads/Lights-Main-Banner.webp" />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary via-transparent to-transparent lg:block hidden"></div>
               </div>
             </div>
@@ -114,9 +114,9 @@ export default function SmartLights() {
                     to={`/category/${tile.slug}`}
                     className="bg-surface-card rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-border-subtle transition-all duration-300 group cursor-pointer block"
                   >
-                    <div className="relative w-full aspect-[4/5] overflow-hidden bg-surface-container-low">
+                    <div className="relative w-full aspect-square overflow-hidden bg-surface-container-low">
                       <div className="h-full w-full group-hover:scale-105 transition-transform duration-500">
-                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "bolt"} accent={tile.accent || undefined} />
+                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "bolt"} accent={tile.accent || undefined} fit="cover" />
                       </div>
                       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/80 to-transparent p-4 pt-10">
                         <span className="font-title-md text-title-md text-surface-bright flex items-center justify-between">

@@ -52,7 +52,7 @@ export default function FansShowcase() {
             </div>
             <div className="lg:col-span-6">
               <div className="relative rounded-xl overflow-hidden shadow-md">
-                <img alt="Impart Grandeur to your living space with Crompton fans" className="w-full h-72 object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VAs2CM4j6llpn8nDD-U2o_MVCGyxaCc2prJhSQGUCWZEIcnxHzCcFBsGhmQYv0Kao7t1U3NA8XxZJy5brL5J2CvB_DVhcIGRWprEvCj3opDJyacwnUo2RJnzon-QZs-oTk6MglejSS2cG-hXJmatwW_P01jxkTUZ9A5zWjw4Xx87ekmDrlR38qsMOZmQqBm5ipa_YKr9laH0Sxo5aEQpc8cnMZHy5y0PxAWPivgJ4W6KpyYvAUxUMw6Sw" />
+                <img alt="Impart Grandeur to your living space with Crompton fans" className="w-full h-72 object-cover object-top" src="https://anuragtraders.com/wp-content/uploads/Fan-Banner.webp" />
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function FansShowcase() {
                   >
                     <div className="relative overflow-hidden bg-surface-container-low h-52">
                       <div className="h-full w-full group-hover:scale-105 transition-transform duration-500">
-                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "fan"} accent={tile.accent || undefined} />
+                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "fan"} accent={tile.accent || undefined} fit="cover" />
                       </div>
                       {content.badge && (
                         <span className="absolute top-3 left-3 bg-surface-card/90 text-on-surface text-label-sm font-label-sm px-2.5 py-1 rounded-md font-bold">

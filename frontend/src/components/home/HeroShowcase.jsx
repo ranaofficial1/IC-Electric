@@ -130,7 +130,7 @@ export default function HeroShowcase() {
               <div className="lg:col-span-5 flex items-center justify-center relative">
                 <div className="absolute w-80 h-80 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="relative bg-surface-card/10 backdrop-blur-sm p-4 rounded-2xl shadow-2xl w-full max-w-md">
-                  <img alt="Crompton Ameo Neo Kitchen Appliance Slider" className="w-full h-80 object-cover rounded-xl shadow-lg" src="https://lh3.googleusercontent.com/aida/AEtjO1UclkyCSlyKNMwzNAn8ErpR4wRJuh6EO3nDgWnposegnWcN3RwO7bwjuJfKMm1ozUCl57-oUiW8Xo3EFkTbFf7jUN72ZKYxwsP7HOujP0Uk171riAHZ0p5ygIWV3q2ST-OrVY3w5Pp7T3RiLuVoZkIC_RKOdldvKIiMzDzIv1CKKZ_9LRptgcnbFJQ8RxKaNMhyiZr5M4X4Dm9pXtaIKCk4D2XN_RCBHc8R8WuNQXOMj8R8RMNb41FPTAM" />
+                  <img alt="Crompton Ameo Neo Kitchen Appliance Slider" className="w-full h-80 object-cover rounded-xl shadow-lg" src="https://anuragtraders.com/wp-content/uploads/Crompton-Ameo-Neo-3-Jar-Mixer-1.webp" />
                   <div className="absolute -bottom-3 -right-3 bg-surface-card text-on-surface px-4 py-2 rounded-xl shadow-lg flex items-center gap-2">
                     <span className="material-symbols-outlined text-energy-amber text-[20px]">
                       star
@@ -216,7 +216,7 @@ export default function HeroShowcase() {
               <div className="lg:col-span-5 flex items-center justify-center relative">
                 <div className="absolute w-80 h-80 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="relative bg-surface-card p-4 rounded-2xl shadow-2xl w-full max-w-md">
-                  <img alt="Crompton ActivHot Kettle" className="w-full h-80 object-contain rounded-xl" src="https://lh3.googleusercontent.com/aida/AEtjO1VqeOdiIepRYOgEDhChSt-O1gSsIgCnSlI-Yi-r1X3U09uYpEtKLvE89YQRK0t3Vqw--2JoT8wa4bzam8Dyx8scFKBistnedWIGY1jfUVB5SegN_U1SDo-l_wH0qFMPbkz86VPxT6XovYwT6vBanqD9o6Rfhr16J5IxUzpSo1J1P4zgImBsIHppUfojFgvv8LaG6wGXfyhD05QjiYBntwz1R0_Yo5beIECrH70r5xAIWypLCBsIQKwNog" />
+                  <img alt="Crompton ActivHot Kettle" className="w-full h-80 object-contain rounded-xl" src="https://anuragtraders.com/wp-content/uploads/ActivHot-Cool-Touch-Electric-Kettle-1.webp" />
                   <div className="absolute -top-3 -left-3 bg-secondary text-on-secondary px-3 py-1 rounded-lg text-label-sm font-label-sm font-bold shadow-md">
                     Cool-Touch Safety
                   </div>
@@ -260,7 +260,7 @@ export default function HeroShowcase() {
               </div>
               <div className="lg:col-span-5 flex items-center justify-center">
                 <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl">
-                  <img alt="Crompton Grandeur Fan Collection Banner" className="w-full h-80 object-cover rounded-2xl" src="https://lh3.googleusercontent.com/aida/AEtjO1VAs2CM4j6llpn8nDD-U2o_MVCGyxaCc2prJhSQGUCWZEIcnxHzCcFBsGhmQYv0Kao7t1U3NA8XxZJy5brL5J2CvB_DVhcIGRWprEvCj3opDJyacwnUo2RJnzon-QZs-oTk6MglejSS2cG-hXJmatwW_P01jxkTUZ9A5zWjw4Xx87ekmDrlR38qsMOZmQqBm5ipa_YKr9laH0Sxo5aEQpc8cnMZHy5y0PxAWPivgJ4W6KpyYvAUxUMw6Sw" />
+                  <img alt="Crompton Grandeur Fan Collection Banner" className="w-full h-80 object-top object-cover rounded-2xl" src="https://anuragtraders.com/wp-content/uploads/Category-Brochure-Download.webp" />
                 </div>
               </div>
             </div>
@@ -301,7 +301,7 @@ export default function HeroShowcase() {
               </div>
               <div className="lg:col-span-5 flex items-center justify-center">
                 <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl">
-                  <img alt="Crompton Storage Water Heater" className="w-full h-80 object-cover rounded-2xl" src="https://lh3.googleusercontent.com/aida/AEtjO1X5y84lO7jt3z10jnenlVrKqlDoaNOVrtIpy8M4P8gxkLcrb4b6hQxEDYAOWApgtMX88eJK8Iu89KZ9yPfBlZ9L7-IjXgogSsybsm6xLEoL3dVyBynH2aArujmFunoxarD6gAM8ZymMXsiNH2FM7y7WOihvKmR-56XNb2mklFfkr1VGJToBF8bAAsYbikfbxdAQqTRp9yt9X5htDsDOSsej3yLEdMESukE_yIrqOIt_MuBveiXPoCKWKOI" />
+                  <img alt="Crompton Storage Water Heater" className="w-full h-80 object-cover object-top rounded-2xl" src="https://anuragtraders.com/wp-content/uploads/Water-Heater-BG.webp" />
                 </div>
               </div>
             </div>
