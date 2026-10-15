@@ -51,7 +51,7 @@ export default function WaterHeaters() {
                   <div key={tile.id} className="bg-surface-card text-on-surface rounded-2xl overflow-hidden shadow-lg flex flex-col group">
                     <Link to={`/category/${tile.slug}`} className="relative overflow-hidden bg-surface-container-low h-72 block">
                       <div className="h-full w-full group-hover:scale-105 transition-transform duration-500">
-                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "fire"} accent={tile.accent || undefined} />
+                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "fire"} accent={tile.accent || undefined} fit="cover" />
                       </div>
                       {content.badge && (
                         <div className="absolute top-3 left-3 bg-discount-emerald text-on-primary text-label-sm font-label-sm px-3 py-1 rounded-full font-bold">

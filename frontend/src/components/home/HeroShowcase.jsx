@@ -150,8 +150,7 @@ export default function HeroShowcase() {
                   <img
                     alt="Crompton Ameo Neo Kitchen Appliance Slider"
                     className={`${imgHeight} rounded-xl object-cover shadow-lg`}
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1UclkyCSlyKNMwzNAn8ErpR4wRJuh6EO3nDgWnposegnWcN3RwO7bwjuJfKMm1ozUCl57-oUiW8Xo3EFkTbFf7jUN72ZKYxwsP7HOujP0Uk171riAHZ0p5ygIWV3q2ST-OrVY3w5Pp7T3RiLuVoZkIC_RKOdldvKIiMzDzIv1CKKZ_9LRptgcnbFJQ8RxKaNMhyiZr5M4X4Dm9pXtaIKCk4D2XN_RCBHc8R8WuNQXOMj8R8RMNb41FPTAM"
-                  />
+                    src="https://anuragtraders.com/wp-content/uploads/Crompton-Ameo-Neo-3-Jar-Mixer-1.webp"/>
                   <div className="absolute bottom-1 right-1 flex items-center gap-1.5 rounded-xl bg-surface-card px-2.5 py-1.5 text-on-surface shadow-lg sm:-bottom-3 sm:-right-3 sm:gap-2 sm:px-4 sm:py-2">
                     <span className="material-symbols-outlined text-[16px] text-energy-amber sm:text-[20px]">star</span>
                     <span className="font-title-md text-[11px] sm:text-title-md">Guwahati Ready Stock</span>
@@ -221,7 +220,7 @@ export default function HeroShowcase() {
                   <img
                     alt="Crompton ActivHot Kettle"
                     className={`${imgHeight} rounded-xl object-contain`}
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1VqeOdiIepRYOgEDhChSt-O1gSsIgCnSlI-Yi-r1X3U09uYpEtKLvE89YQRK0t3Vqw--2JoT8wa4bzam8Dyx8scFKBistnedWIGY1jfUVB5SegN_U1SDo-l_wH0qFMPbkz86VPxT6XovYwT6vBanqD9o6Rfhr16J5IxUzpSo1J1P4zgImBsIHppUfojFgvv8LaG6wGXfyhD05QjiYBntwz1R0_Yo5beIECrH70r5xAIWypLCBsIQKwNog"
+                    src="https://anuragtraders.com/wp-content/uploads/ActivHot-Cool-Touch-Electric-Kettle-1.webp"
                   />
                   <div className="absolute left-1 top-1 rounded-lg bg-secondary px-2 py-0.5 text-[10px] font-bold text-on-secondary shadow-md sm:-left-3 sm:-top-3 sm:px-3 sm:py-1 sm:text-label-sm font-label-sm">
                     Cool-Touch Safety
@@ -263,8 +262,7 @@ export default function HeroShowcase() {
                   <img
                     alt="Crompton Grandeur Fan Collection Banner"
                     className={`${imgHeight} rounded-2xl object-cover`}
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1VAs2CM4j6llpn8nDD-U2o_MVCGyxaCc2prJhSQGUCWZEIcnxHzCcFBsGhmQYv0Kao7t1U3NA8XxZJy5brL5J2CvB_DVhcIGRWprEvCj3opDJyacwnUo2RJnzon-QZs-oTk6MglejSS2cG-hXJmatwW_P01jxkTUZ9A5zWjw4Xx87ekmDrlR38qsMOZmQqBm5ipa_YKr9laH0Sxo5aEQpc8cnMZHy5y0PxAWPivgJ4W6KpyYvAUxUMw6Sw"
-                  />
+                    src="https://anuragtraders.com/wp-content/uploads/Category-Brochure-Download.webp" />
                 </div>
               </div>
             </div>
@@ -302,8 +300,7 @@ export default function HeroShowcase() {
                   <img
                     alt="Crompton Storage Water Heater"
                     className={`${imgHeight} rounded-2xl object-cover`}
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1X5y84lO7jt3z10jnenlVrKqlDoaNOVrtIpy8M4P8gxkLcrb4b6hQxEDYAOWApgtMX88eJK8Iu89KZ9yPfBlZ9L7-IjXgogSsybsm6xLEoL3dVyBynH2aArujmFunoxarD6gAM8ZymMXsiNH2FM7y7WOihvKmR-56XNb2mklFfkr1VGJToBF8bAAsYbikfbxdAQqTRp9yt9X5htDsDOSsej3yLEdMESukE_yIrqOIt_MuBveiXPoCKWKOI"
-                  />
+                    src="https://anuragtraders.com/wp-content/uploads/Water-Heater-BG.webp" />
                 </div>
               </div>
             </div>
