@@ -261,7 +261,7 @@ export default function HeroShowcase() {
                 <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl lg:max-w-none">
                   <img
                     alt="Crompton Grandeur Fan Collection Banner"
-                    className={`${imgHeight} rounded-2xl object-cover`}
+                    className={`${imgHeight} rounded-2xl object-top object-cover`}
                     src="https://anuragtraders.com/wp-content/uploads/Category-Brochure-Download.webp" />
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function HeroShowcase() {
                 <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl lg:max-w-none">
                   <img
                     alt="Crompton Storage Water Heater"
-                    className={`${imgHeight} rounded-2xl object-cover`}
+                    className={`${imgHeight} rounded-2xl object-top object-cover`}
                     src="https://anuragtraders.com/wp-content/uploads/Water-Heater-BG.webp" />
                 </div>
               </div>
