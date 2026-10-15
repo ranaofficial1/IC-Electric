@@ -25,7 +25,7 @@ export default function OrderForm() {
                   {" Guwahati Hub"}
                 </span>
               </div>
-              <h2 className="font-headline-lg text-headline-lg text-primary">
+              <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] tracking-tight text-primary sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 {"Get In Touch "}
                 &amp;
                 {" Experience Center"}
@@ -48,7 +48,7 @@ export default function OrderForm() {
               <div className="bg-primary text-on-primary rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
                 <div className="absolute -right-12 -top-12 w-48 h-48 bg-secondary/30 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="relative z-10 flex flex-col gap-6">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold uppercase tracking-wider">
                       <span className="material-symbols-outlined text-[14px]">
                         verified
@@ -274,14 +274,13 @@ export default function OrderForm() {
                       {" encrypted"}
                     </span>
                   </div>
-                  <button className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-container text-on-primary py-3 px-8 rounded-full font-label-lg text-label-lg font-semibold transition-all shadow-md ml-auto" type="submit">
-                    <span className="">
-                      Submit Inquiry
-                    </span>
-                    <span className="material-symbols-outlined text-[18px]">
-                      send
-                    </span>
-                  </button>
+                 <button
+  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-3 font-label-lg text-label-lg font-semibold text-on-primary shadow-md transition-all hover:bg-primary-container sm:ml-auto sm:w-auto"
+  type="submit"
+>
+  <span>Submit Inquiry</span>
+  <span className="material-symbols-outlined text-[18px]">send</span>
+</button>
                 </div>
               </form>
               <div className="mt-6 pt-4 border-t border-border-subtle flex items-center justify-between text-body-sm text-text-muted flex-wrap gap-2">

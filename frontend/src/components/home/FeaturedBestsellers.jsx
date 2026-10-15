@@ -92,23 +92,32 @@ export default function FeaturedBestsellers() {
               ))} */}
            
           {/* Horizontal Multi-Item Product Carousel Track */}
-          <div className="flex gap-6 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x" id="bestseller-carousel-track" ref={trackRef}>
+          <div
+  className="flex items-stretch gap-3 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x sm:gap-6"
+  id="bestseller-carousel-track"
+  ref={trackRef}
+>
             {loading &&
               Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="bestseller-item w-80 h-[420px] flex-shrink-0 snap-start rounded-2xl bg-surface-card border border-border-subtle animate-pulse" aria-hidden="true" />
+                <div
+                  key={i}
+                  className="bestseller-item h-[320px] w-[165px] flex-shrink-0 snap-start animate-pulse rounded-2xl border border-border-subtle bg-surface-card sm:h-[420px] sm:w-80"
+                  aria-hidden="true"
+                />
               ))}
             {!loading && products.length === 0 && (
               <p className="py-10 font-body-md text-body-md text-text-muted">No products in this category yet.</p>
             )}
             {!loading &&
-              products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  className="bestseller-item w-80 flex-shrink-0 snap-start border border-border-subtle"
-                />
-              ))}
-          </div>
+    products.map((product) => (
+      <div
+        key={product.id}
+        className="bestseller-item flex w-[165px] flex-shrink-0 snap-start sm:w-80"
+      >
+        <ProductCard product={product} className="w-full" />
+      </div>
+    ))}
+</div>
           {/* Carousel Indicator Strip */}
           <div className="flex items-center justify-between pt-2 border-t border-border-subtle">
             <div className="flex items-center gap-2">

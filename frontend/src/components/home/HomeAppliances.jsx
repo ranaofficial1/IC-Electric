@@ -35,13 +35,13 @@ export default function HomeAppliances() {
                 &amp;
                 {" Winter Comfort"}
               </span>
-              <h2 className="font-headline-lg text-headline-lg text-primary">
+              <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] tracking-tight text-primary sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 Home Applications
               </h2>
               <p className="font-body-lg text-body-lg text-text-secondary">
                 Each product is meticulously crafted to provide long-lasting reliability that blends in harmoniously with putting the 'Home' in home appliances. From instant warmth convector heaters to anti-drip heavy dry irons.
               </p>
-              <div className="flex items-center gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
                 <Link className="inline-flex items-center gap-2 bg-secondary text-on-secondary px-6 py-2.5 rounded-full font-label-md text-label-md font-bold hover:bg-on-secondary-container transition-all shadow-md" to={`/category/${homeSlug}`}>
                   {"Explore Collection "}
                   <span className="material-symbols-outlined text-[18px]">

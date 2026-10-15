@@ -28,13 +28,13 @@ export default function FansShowcase() {
                 &amp;
                 {" Aerodynamics"}
               </span>
-              <h2 className="font-headline-lg text-headline-lg text-primary">
+              <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] tracking-tight text-primary sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 Premium Designed and Impart Grandeur Fans Collections
               </h2>
               <p className="font-body-lg text-body-lg text-text-secondary">
                 Enjoy the serene quiet of our noiseless fans, embrace the efficiency of our energy-saving BLDC fans, or enhance your décor with our premium designer fans. Whether you prefer a modern touch or classic elegance, Crompton fans from Anurag Traders are the ideal choice to infuse sophistication and charm into any room.
               </p>
-              <div className="flex items-center gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
                 <Link className="inline-flex items-center gap-2 bg-secondary hover:bg-on-secondary-container text-on-secondary px-6 py-2.5 rounded-full font-label-md text-label-md font-bold transition-all shadow-md" to={`/category/${FANS_SLUG}`}>
                   {"Explore Collection "}
                   <span className="material-symbols-outlined text-[18px]">

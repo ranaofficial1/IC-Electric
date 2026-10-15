@@ -25,7 +25,8 @@ export default function WaterHeaters() {
               <span className="text-secondary-container font-label-sm text-label-sm uppercase font-bold tracking-wider">
                 Thermal Engineering Excellence
               </span>
-              <h2 className="font-headline-lg text-headline-lg text-surface-bright mt-1">
+         
+              <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] text-surface-bright mt-1 sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 Driving With Innovation — Water Heaters
               </h2>
               <p className="font-body-lg text-body-lg text-on-primary-container max-w-2xl mt-1">

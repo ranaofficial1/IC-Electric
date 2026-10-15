@@ -32,7 +32,7 @@ export default function SmartLights() {
                   {" Up to 85% Power Saving"}
                 </span>
               </div>
-              <h2 className="font-headline-lg text-headline-lg text-primary">
+              <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] tracking-tight text-primary sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 Home Lighting Reimagined With Crompton Lights
               </h2>
               <p className="font-body-lg text-body-lg text-text-secondary max-w-2xl mt-1">
@@ -104,7 +104,7 @@ export default function SmartLights() {
           </div>
           {/* Lighting collection tiles — real subcategories */}
           {tiles.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {tiles.map((tile) => {
                 const content = collectionContent(tile.slug);
                 const image = content.image || tile.image;
@@ -114,7 +114,7 @@ export default function SmartLights() {
                     to={`/category/${tile.slug}`}
                     className="bg-surface-card rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-border-subtle transition-all duration-300 group cursor-pointer block"
                   >
-                    <div className="relative w-full aspect-[4/5] overflow-hidden bg-surface-container-low">
+                    <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-surface-container-low">
                       <div className="h-full w-full group-hover:scale-105 transition-transform duration-500">
                         <MediaTile src={image} alt={tile.name} icon={tile.icon || "bolt"} accent={tile.accent || undefined} />
                       </div>
