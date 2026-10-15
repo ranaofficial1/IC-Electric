@@ -5,11 +5,9 @@ import { useProduct } from "../../hooks/useCatalog.js";
 import { useShopActions } from "../../hooks/useShopActions.js";
 import { formatPrice } from "../../utils/formatPrice.js";
 
-// The two product slides are bound to real catalog products (looked up by slug),
-// so their price / MRP / savings and Buy Now buttons are live. Slides 3 and 4
-// are collection banners that link to the real category pages.
 const MIXER_SLUG = "crompton-ameo-neo-3-jar-mixer";
 const KETTLE_SLUG = "activhot-cool-touch-electric-kettle";
+const TOTAL_SLIDES = 4;
 
 function savingsOf(product) {
   if (!product || !product.salePrice) return null;
@@ -19,17 +17,50 @@ function savingsOf(product) {
   };
 }
 
+/* ---------- Shared responsive classes ---------- */
+// Slide wrapper: mobile pe chhota padding + neeche nav bar ke liye jagah (pb-16)
+const slideBase =
+  "hero-slide transition-opacity duration-700 ease-in-out grid grid-cols-1 lg:grid-cols-12 items-center gap-5 md:gap-8 px-4 pt-6 pb-16 sm:px-8 sm:pt-8 md:px-12 md:pt-12 lg:min-h-[540px]";
+const textCol =
+  "lg:col-span-7 flex flex-col justify-center gap-2.5 sm:gap-space-sm z-10 text-on-primary min-w-0";
+const chipRow = "flex items-center gap-1.5 sm:gap-2 flex-wrap";
+const chipBase =
+  "rounded-full px-2.5 py-0.5 text-[10px] sm:px-3 sm:py-1 sm:text-label-sm font-label-sm font-bold";
+const headline =
+  "font-headline-xl text-[26px] sm:text-4xl lg:text-headline-xl text-surface-bright tracking-tight mt-1 leading-tight";
+const paragraph =
+  "font-body-lg text-[13px] leading-relaxed sm:text-base lg:text-body-lg text-on-primary-container max-w-xl";
+const priceMain = "font-headline-lg text-2xl sm:text-3xl lg:text-headline-lg text-surface-bright";
+const priceMrp = "font-title-md text-sm sm:text-base lg:text-title-md text-text-muted line-through";
+const savePill =
+  "bg-discount-emerald text-on-primary font-label-sm text-[10px] sm:text-label-sm px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full font-bold";
+const btnRow = "flex flex-wrap items-center gap-2 sm:gap-space-md pt-2 sm:pt-4";
+const btnSize =
+  "inline-flex flex-1 sm:flex-none items-center justify-center gap-1.5 sm:gap-2 rounded-full px-4 py-2.5 sm:px-6 sm:py-3 text-center text-[13px] sm:text-label-lg font-label-lg font-semibold";
+
+const btnPrimary = `${btnSize} bg-secondary hover:bg-on-secondary-container text-on-secondary transition-all shadow-lg disabled:cursor-not-allowed disabled:opacity-70`;
+
+// Mobile pe hidden, sm+ pe dikhega
+const btnGhost = `${btnSize} hidden sm:inline-flex bg-surface-container-high/20 hover:bg-surface-container-high/30 text-surface-bright transition-colors`;
+
+// Slides 3 aur 4 ke second button ke liye (naya constant)
+const btnGhostAlt = `${btnSize} hidden sm:inline-flex bg-surface-card/20 text-surface-bright`;
+
+// Slides 3 aur 4 ke primary button ke liye (naya constant)
+const btnPrimaryLink = `${btnSize} bg-secondary hover:bg-on-secondary-container text-on-secondary transition-all`;  
+const imgCol = "lg:col-span-5 flex items-center justify-center relative";
+const imgHeight = "w-full h-48 sm:h-64 lg:h-80";
+const glow = "absolute w-48 h-48 sm:w-80 sm:h-80 rounded-full blur-3xl pointer-events-none";
+
 export default function HeroShowcase() {
   const { product: mixer } = useProduct(MIXER_SLUG);
   const { product: kettle } = useProduct(KETTLE_SLUG);
   const actions = useShopActions();
   const mixerSaving = savingsOf(mixer);
   const kettleSaving = savingsOf(kettle);
-  const buyButtonBase =
-    "inline-flex items-center gap-2 bg-secondary hover:bg-on-secondary-container text-on-secondary px-6 py-3 rounded-full font-label-lg text-label-lg font-semibold transition-all shadow-lg disabled:cursor-not-allowed disabled:opacity-70";
-  const TOTAL_SLIDES = 4;
+
   const [slide, setSlide0] = useState(1);
-  const [timerKey, setTimerKey] = useState(0); // bumping this restarts the autoplay timer (reference: resetAutoPlay)
+  const [timerKey, setTimerKey] = useState(0);
 
   useEffect(() => {
     const id = setInterval(() => setSlide0((s) => (s + 1 > TOTAL_SLIDES ? 1 : s + 1)), 5500);
@@ -49,289 +80,272 @@ export default function HeroShowcase() {
     setTimerKey((k) => k + 1);
   };
 
+  const show = (n) => (slide === n ? "active" : "hidden");
+
   return (
     <>
-      <section className="w-full px-gutter py-space-md">
-        <div className="max-w-[1360px] mx-auto">
-          <div className="relative w-full rounded-2xl overflow-hidden bg-primary shadow-xl">
-            {/* Slide 1: Ameo Neo Mixer Grinder */}
-            <div className={`hero-slide transition-opacity duration-700 ease-in-out grid grid-cols-1 lg:grid-cols-12 min-h-[540px] items-center p-6 md:p-12 gap-8 ${slide === 1 ? "active" : "hidden"}`} id="hero-slide-1">
-              <div className="lg:col-span-7 flex flex-col justify-center gap-space-sm z-10 text-on-primary">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="bg-secondary px-3 py-1 rounded-full text-label-sm font-label-sm tracking-wider uppercase text-on-secondary font-bold">
+      {/* Mobile pe edge-to-edge (no side padding, no rounded), sm+ pe gutter wapas */}
+      <section className="w-full px-0 py-0 sm:px-gutter sm:py-space-md">
+        <div className="mx-auto max-w-[1360px]">
+          <div className="relative w-full overflow-hidden bg-primary shadow-xl sm:rounded-2xl">
+            {/* ---------- Slide 1: Mixer ---------- */}
+            <div className={`${slideBase} ${show(1)}`} id="hero-slide-1">
+              <div className={textCol}>
+                <div className={chipRow}>
+                  <span className={`${chipBase} bg-secondary tracking-wider uppercase text-on-secondary`}>
                     Featured Food Prep
                   </span>
-                  {" "}
-                  <span className="bg-discount-emerald/20 text-discount-emerald px-3 py-1 rounded-full text-label-sm font-label-sm font-bold">
+                  <span className={`${chipBase} bg-discount-emerald/20 text-discount-emerald`}>
                     {mixerSaving ? `Special Dealer -${mixerSaving.percent}% OFF` : "Special Dealer Price"}
                   </span>
-                  {" "}
-                  <span className="text-on-primary-container text-label-sm font-label-sm flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[15px]">
-                      electric_bolt
-                    </span>
-                    {" 500W Powertron Motor"}
+                  <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[13px] sm:text-[15px]">electric_bolt</span>
+                    500W Powertron Motor
                   </span>
                 </div>
-                <h1 className="font-headline-xl text-headline-xl text-surface-bright tracking-tight mt-1 leading-tight">
-                  {"Crompton Ameo Neo "}
-                  <br />
-                  <span className="text-secondary-fixed">
-                    3 Jar Mixer Grinder
-                  </span>
+                <h1 className={headline}>
+                  Crompton Ameo Neo <br className="hidden sm:block" />
+                  <span className="text-secondary-fixed">3 Jar Mixer Grinder</span>
                 </h1>
-                <p className="font-body-lg text-body-lg text-on-primary-container max-w-xl">
+                <p className={`${paragraph} line-clamp-3 sm:line-clamp-none`}>
                   Engineered with heavy-duty copper-wound motors and leak-tight stainless steel jars. Precision grinding for authentic culinary textures with built-in overload protection.
                 </p>
                 {mixer && (
-                  <div className="flex items-baseline gap-4 pt-2">
-                    <span className="font-headline-lg text-headline-lg text-surface-bright">
-                      {formatPrice(mixer.salePrice ?? mixer.price)}
-                    </span>
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 pt-1 sm:gap-x-4 sm:pt-2">
+                    <span className={priceMain}>{formatPrice(mixer.salePrice ?? mixer.price)}</span>
                     {mixerSaving && (
                       <>
-                        {" "}
-                        <span className="font-title-md text-title-md text-text-muted line-through">
-                          {`MRP: ${formatPrice(mixer.price)}`}
-                        </span>
-                        {" "}
-                        <span className="bg-discount-emerald text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded-full font-bold">
-                          {`SAVE ${formatPrice(mixerSaving.amount)}`}
-                        </span>
+                        <span className={priceMrp}>{`MRP: ${formatPrice(mixer.price)}`}</span>
+                        <span className={savePill}>{`SAVE ${formatPrice(mixerSaving.amount)}`}</span>
                       </>
                     )}
                   </div>
                 )}
-                <div className="flex items-center gap-space-md pt-4 flex-wrap">
+                <div className={btnRow}>
                   {mixer ? (
-                    <button type="button" className={`${buyButtonBase} shadow-secondary/30`} onClick={() => actions.buyNow(mixer)} disabled={actions.isBuying(mixer) || mixer.stock < 1}>
-                      <span className="material-symbols-outlined text-[20px]">
-                        shopping_cart
-                      </span>
-                      {mixer.stock < 1 ? " Out of Stock" : actions.isBuying(mixer) ? " Please wait..." : " Buy Now"}
+                    <button
+                      type="button"
+                      className={`${btnPrimary} shadow-secondary/30`}
+                      onClick={() => actions.buyNow(mixer)}
+                      disabled={actions.isBuying(mixer) || mixer.stock < 1}
+                    >
+                      <span className="material-symbols-outlined text-[18px] sm:text-[20px]">shopping_cart</span>
+                      {mixer.stock < 1 ? "Out of Stock" : actions.isBuying(mixer) ? "Please wait..." : "Buy Now"}
                     </button>
                   ) : (
-                    <Link className={buyButtonBase} to="/category/appliances">
-                      <span className="material-symbols-outlined text-[20px]">
-                        shopping_cart
-                      </span>
-                      {" Shop Kitchen Appliances"}
+                    <Link className={btnPrimary} to="/category/appliances">
+                      <span className="material-symbols-outlined text-[18px] sm:text-[20px]">shopping_cart</span>
+                      Shop Kitchen Appliances
                     </Link>
                   )}
-                  {" "}
-                  <Link className="inline-flex items-center gap-2 bg-surface-container-high/20 hover:bg-surface-container-high/30 text-surface-bright px-6 py-3 rounded-full font-label-lg text-label-lg font-semibold transition-colors" to={mixer ? `/product/${mixer.slug}` : "/category/appliances"}>
-                    {"View Specifications "}
-                    <span className="material-symbols-outlined text-[18px]">
-                      arrow_forward
-                    </span>
+                  <Link className={btnGhost} to={mixer ? `/product/${mixer.slug}` : "/category/appliances"}>
+                    View Specifications
+                    <span className="material-symbols-outlined text-[16px] sm:text-[18px]">arrow_forward</span>
                   </Link>
                 </div>
               </div>
-              <div className="lg:col-span-5 flex items-center justify-center relative">
-                <div className="absolute w-80 h-80 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="relative bg-surface-card/10 backdrop-blur-sm p-4 rounded-2xl shadow-2xl w-full max-w-md">
-                  <img alt="Crompton Ameo Neo Kitchen Appliance Slider" className="w-full h-80 object-cover rounded-xl shadow-lg" src="https://lh3.googleusercontent.com/aida/AEtjO1UclkyCSlyKNMwzNAn8ErpR4wRJuh6EO3nDgWnposegnWcN3RwO7bwjuJfKMm1ozUCl57-oUiW8Xo3EFkTbFf7jUN72ZKYxwsP7HOujP0Uk171riAHZ0p5ygIWV3q2ST-OrVY3w5Pp7T3RiLuVoZkIC_RKOdldvKIiMzDzIv1CKKZ_9LRptgcnbFJQ8RxKaNMhyiZr5M4X4Dm9pXtaIKCk4D2XN_RCBHc8R8WuNQXOMj8R8RMNb41FPTAM" />
-                  <div className="absolute -bottom-3 -right-3 bg-surface-card text-on-surface px-4 py-2 rounded-xl shadow-lg flex items-center gap-2">
-                    <span className="material-symbols-outlined text-energy-amber text-[20px]">
-                      star
-                    </span>
-                    {" "}
-                    <span className="font-title-md text-title-md">
-                      Guwahati Ready Stock
-                    </span>
+              <div className={imgCol}>
+                <div className={`${glow} bg-secondary/20`}></div>
+                <div className="relative w-full max-w-md rounded-2xl bg-surface-card/10 p-2.5 shadow-2xl backdrop-blur-sm sm:p-4">
+                  <img
+                    alt="Crompton Ameo Neo Kitchen Appliance Slider"
+                    className={`${imgHeight} rounded-xl object-cover shadow-lg`}
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1UclkyCSlyKNMwzNAn8ErpR4wRJuh6EO3nDgWnposegnWcN3RwO7bwjuJfKMm1ozUCl57-oUiW8Xo3EFkTbFf7jUN72ZKYxwsP7HOujP0Uk171riAHZ0p5ygIWV3q2ST-OrVY3w5Pp7T3RiLuVoZkIC_RKOdldvKIiMzDzIv1CKKZ_9LRptgcnbFJQ8RxKaNMhyiZr5M4X4Dm9pXtaIKCk4D2XN_RCBHc8R8WuNQXOMj8R8RMNb41FPTAM"
+                  />
+                  <div className="absolute bottom-1 right-1 flex items-center gap-1.5 rounded-xl bg-surface-card px-2.5 py-1.5 text-on-surface shadow-lg sm:-bottom-3 sm:-right-3 sm:gap-2 sm:px-4 sm:py-2">
+                    <span className="material-symbols-outlined text-[16px] text-energy-amber sm:text-[20px]">star</span>
+                    <span className="font-title-md text-[11px] sm:text-title-md">Guwahati Ready Stock</span>
                   </div>
                 </div>
               </div>
             </div>
-            {/* Slide 2: ActivHot Kettle */}
-            <div className={`hero-slide transition-opacity duration-700 ease-in-out grid grid-cols-1 lg:grid-cols-12 min-h-[540px] items-center p-6 md:p-12 gap-8 ${slide === 2 ? "active" : "hidden"}`} id="hero-slide-2">
-              <div className="lg:col-span-7 flex flex-col justify-center gap-space-sm z-10 text-on-primary">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="bg-secondary px-3 py-1 rounded-full text-label-sm font-label-sm tracking-wider uppercase text-on-secondary font-bold">
+
+            {/* ---------- Slide 2: Kettle ---------- */}
+            <div className={`${slideBase} ${show(2)}`} id="hero-slide-2">
+              <div className={textCol}>
+                <div className={chipRow}>
+                  <span className={`${chipBase} bg-secondary tracking-wider uppercase text-on-secondary`}>
                     Fast Brewing Series
                   </span>
-                  {" "}
-                  <span className="bg-discount-emerald/20 text-discount-emerald px-3 py-1 rounded-full text-label-sm font-label-sm font-bold">
+                  <span className={`${chipBase} bg-discount-emerald/20 text-discount-emerald`}>
                     {kettleSaving ? `Dealer Rate -${kettleSaving.percent}%` : "Dealer Rate"}
                   </span>
-                  {" "}
-                  <span className="text-on-primary-container text-label-sm font-label-sm flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[15px]">
-                      mode_heat
-                    </span>
-                    {" 1350W Fast Rapid Boil"}
+                  <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[13px] sm:text-[15px]">mode_heat</span>
+                    1350W Fast Rapid Boil
                   </span>
                 </div>
-                <h2 className="font-headline-xl text-headline-xl text-surface-bright tracking-tight mt-1 leading-tight">
-                  {"ActivHot Cool Touch "}
-                  <br />
-                  <span className="text-secondary-fixed">
-                    Electric Rapid Kettle
-                  </span>
+                <h2 className={headline}>
+                  ActivHot Cool Touch <br className="hidden sm:block" />
+                  <span className="text-secondary-fixed">Electric Rapid Kettle</span>
                 </h2>
-                <p className="font-body-lg text-body-lg text-on-primary-container max-w-xl">
+                <p className={`${paragraph} line-clamp-3 sm:line-clamp-none`}>
                   Double-wall insulated cool exterior with seamless 304 food-grade stainless interior. Auto shut-off dry-boil sensor for effortless morning tea and coffee brewing.
                 </p>
                 {kettle && (
-                  <div className="flex items-baseline gap-4 pt-2">
-                    <span className="font-headline-lg text-headline-lg text-surface-bright">
-                      {formatPrice(kettle.salePrice ?? kettle.price)}
-                    </span>
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 pt-1 sm:gap-x-4 sm:pt-2">
+                    <span className={priceMain}>{formatPrice(kettle.salePrice ?? kettle.price)}</span>
                     {kettleSaving && (
                       <>
-                        {" "}
-                        <span className="font-title-md text-title-md text-text-muted line-through">
-                          {`MRP: ${formatPrice(kettle.price)}`}
-                        </span>
-                        {" "}
-                        <span className="bg-discount-emerald text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded-full font-bold">
-                          {`${kettleSaving.percent}% SAVINGS`}
-                        </span>
+                        <span className={priceMrp}>{`MRP: ${formatPrice(kettle.price)}`}</span>
+                        <span className={savePill}>{`${kettleSaving.percent}% SAVINGS`}</span>
                       </>
                     )}
                   </div>
                 )}
-                <div className="flex items-center gap-space-md pt-4 flex-wrap">
+                <div className={btnRow}>
                   {kettle ? (
-                    <button type="button" className={buyButtonBase} onClick={() => actions.buyNow(kettle)} disabled={actions.isBuying(kettle) || kettle.stock < 1}>
-                      <span className="material-symbols-outlined text-[20px]">
-                        flash_on
-                      </span>
-                      {kettle.stock < 1 ? " Out of Stock" : actions.isBuying(kettle) ? " Please wait..." : " Buy Direct Now"}
+                    <button
+                      type="button"
+                      className={btnPrimary}
+                      onClick={() => actions.buyNow(kettle)}
+                      disabled={actions.isBuying(kettle) || kettle.stock < 1}
+                    >
+                      <span className="material-symbols-outlined text-[18px] sm:text-[20px]">flash_on</span>
+                      {kettle.stock < 1 ? "Out of Stock" : actions.isBuying(kettle) ? "Please wait..." : "Buy Now"}
                     </button>
                   ) : (
-                    <Link className={buyButtonBase} to="/category/brewing">
-                      <span className="material-symbols-outlined text-[20px]">
-                        flash_on
-                      </span>
-                      {" Shop Brewing"}
+                    <Link className={btnPrimary} to="/category/brewing">
+                      <span className="material-symbols-outlined text-[18px] sm:text-[20px]">flash_on</span>
+                      Shop Brewing
                     </Link>
                   )}
-                  {" "}
-                  <Link className="inline-flex items-center gap-2 bg-surface-container-high/20 hover:bg-surface-container-high/30 text-surface-bright px-6 py-3 rounded-full font-label-lg text-label-lg font-semibold transition-colors" to="/category/brewing">
+                  <Link className={btnGhost} to="/category/brewing">
                     Explore Brewing Series
                   </Link>
                 </div>
               </div>
-              <div className="lg:col-span-5 flex items-center justify-center relative">
-                <div className="absolute w-80 h-80 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="relative bg-surface-card p-4 rounded-2xl shadow-2xl w-full max-w-md">
-                  <img alt="Crompton ActivHot Kettle" className="w-full h-80 object-contain rounded-xl" src="https://lh3.googleusercontent.com/aida/AEtjO1VqeOdiIepRYOgEDhChSt-O1gSsIgCnSlI-Yi-r1X3U09uYpEtKLvE89YQRK0t3Vqw--2JoT8wa4bzam8Dyx8scFKBistnedWIGY1jfUVB5SegN_U1SDo-l_wH0qFMPbkz86VPxT6XovYwT6vBanqD9o6Rfhr16J5IxUzpSo1J1P4zgImBsIHppUfojFgvv8LaG6wGXfyhD05QjiYBntwz1R0_Yo5beIECrH70r5xAIWypLCBsIQKwNog" />
-                  <div className="absolute -top-3 -left-3 bg-secondary text-on-secondary px-3 py-1 rounded-lg text-label-sm font-label-sm font-bold shadow-md">
+              <div className={imgCol}>
+                <div className={`${glow} bg-secondary-container/20`}></div>
+                <div className="relative w-full max-w-md rounded-2xl bg-surface-card p-2.5 shadow-2xl sm:p-4">
+                  <img
+                    alt="Crompton ActivHot Kettle"
+                    className={`${imgHeight} rounded-xl object-contain`}
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1VqeOdiIepRYOgEDhChSt-O1gSsIgCnSlI-Yi-r1X3U09uYpEtKLvE89YQRK0t3Vqw--2JoT8wa4bzam8Dyx8scFKBistnedWIGY1jfUVB5SegN_U1SDo-l_wH0qFMPbkz86VPxT6XovYwT6vBanqD9o6Rfhr16J5IxUzpSo1J1P4zgImBsIHppUfojFgvv8LaG6wGXfyhD05QjiYBntwz1R0_Yo5beIECrH70r5xAIWypLCBsIQKwNog"
+                  />
+                  <div className="absolute left-1 top-1 rounded-lg bg-secondary px-2 py-0.5 text-[10px] font-bold text-on-secondary shadow-md sm:-left-3 sm:-top-3 sm:px-3 sm:py-1 sm:text-label-sm font-label-sm">
                     Cool-Touch Safety
                   </div>
                 </div>
               </div>
             </div>
-            {/* Slide 3: Designer Grandeur Fans */}
-            <div className={`hero-slide transition-opacity duration-700 ease-in-out grid grid-cols-1 lg:grid-cols-12 min-h-[540px] items-center p-6 md:p-12 gap-8 ${slide === 3 ? "active" : "hidden"}`} id="hero-slide-3">
-              <div className="lg:col-span-7 flex flex-col justify-center gap-space-sm z-10 text-on-primary">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="bg-energy-amber px-3 py-1 rounded-full text-label-sm font-label-sm tracking-wider uppercase text-on-primary font-bold">
+
+            {/* ---------- Slide 3: Fans ---------- */}
+            <div className={`${slideBase} ${show(3)}`} id="hero-slide-3">
+              <div className={textCol}>
+                <div className={chipRow}>
+                  <span className={`${chipBase} bg-energy-amber tracking-wider uppercase text-on-primary`}>
                     BLDC Silent Technology
                   </span>
-                  {" "}
-                  <span className="text-on-primary-container text-label-sm font-label-sm">
+                  <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm">
                     5-Star Energy Saver
                   </span>
                 </div>
-                <h2 className="font-headline-xl text-headline-xl text-surface-bright tracking-tight mt-1 leading-tight">
-                  {"Impart Grandeur To Your "}
-                  <br />
-                  <span className="text-secondary-fixed">
-                    Living Room With Crompton Fans
-                  </span>
+                <h2 className={headline}>
+                  Impart Grandeur To Your <br className="hidden sm:block" />
+                  <span className="text-secondary-fixed">Living Room With Crompton Fans</span>
                 </h2>
-                <p className="font-body-lg text-body-lg text-on-primary-container max-w-xl">
+                <p className={`${paragraph} line-clamp-3 sm:line-clamp-none`}>
                   Serene quietness, aerodynamically designed sweeps, and high air delivery. Save up to 50% electricity with silent BLDC motors crafted for North-East climates.
                 </p>
-                <div className="flex items-center gap-space-md pt-4 flex-wrap">
-                  <Link className="inline-flex items-center gap-2 bg-secondary hover:bg-on-secondary-container text-on-secondary px-6 py-3 rounded-full font-label-lg text-label-lg font-semibold transition-all" to="/category/fans">
-                    {"Explore Fan Collection "}
-                    <span className="material-symbols-outlined text-[18px]">
-                      east
-                    </span>
+                <div className={btnRow}>
+                  <Link className={btnPrimaryLink} to="/category/fans">
+                    Explore Fan Collection
+                    <span className="material-symbols-outlined text-[16px] sm:text-[18px]">east</span>
                   </Link>
-                  {" "}
-                  <a className="inline-flex items-center gap-2 bg-surface-card/20 text-surface-bright px-6 py-3 rounded-full font-label-lg text-label-lg font-semibold" href="#order-form">
+                  <a className={btnGhostAlt} href="#order-form">
                     Download Fan Catalog
                   </a>
                 </div>
               </div>
-              <div className="lg:col-span-5 flex items-center justify-center">
-                <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl">
-                  <img alt="Crompton Grandeur Fan Collection Banner" className="w-full h-80 object-cover rounded-2xl" src="https://lh3.googleusercontent.com/aida/AEtjO1VAs2CM4j6llpn8nDD-U2o_MVCGyxaCc2prJhSQGUCWZEIcnxHzCcFBsGhmQYv0Kao7t1U3NA8XxZJy5brL5J2CvB_DVhcIGRWprEvCj3opDJyacwnUo2RJnzon-QZs-oTk6MglejSS2cG-hXJmatwW_P01jxkTUZ9A5zWjw4Xx87ekmDrlR38qsMOZmQqBm5ipa_YKr9laH0Sxo5aEQpc8cnMZHy5y0PxAWPivgJ4W6KpyYvAUxUMw6Sw" />
+              <div className={imgCol}>
+                <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl lg:max-w-none">
+                  <img
+                    alt="Crompton Grandeur Fan Collection Banner"
+                    className={`${imgHeight} rounded-2xl object-cover`}
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1VAs2CM4j6llpn8nDD-U2o_MVCGyxaCc2prJhSQGUCWZEIcnxHzCcFBsGhmQYv0Kao7t1U3NA8XxZJy5brL5J2CvB_DVhcIGRWprEvCj3opDJyacwnUo2RJnzon-QZs-oTk6MglejSS2cG-hXJmatwW_P01jxkTUZ9A5zWjw4Xx87ekmDrlR38qsMOZmQqBm5ipa_YKr9laH0Sxo5aEQpc8cnMZHy5y0PxAWPivgJ4W6KpyYvAUxUMw6Sw"
+                  />
                 </div>
               </div>
             </div>
-            {/* Slide 4: Water Heaters */}
-            <div className={`hero-slide transition-opacity duration-700 ease-in-out grid grid-cols-1 lg:grid-cols-12 min-h-[540px] items-center p-6 md:p-12 gap-8 ${slide === 4 ? "active" : "hidden"}`} id="hero-slide-4">
-              <div className="lg:col-span-7 flex flex-col justify-center gap-space-sm z-10 text-on-primary">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-label-sm font-bold uppercase tracking-wider">
+
+            {/* ---------- Slide 4: Water Heaters ---------- */}
+            <div className={`${slideBase} ${show(4)}`} id="hero-slide-4">
+              <div className={textCol}>
+                <div className={chipRow}>
+                  <span className={`${chipBase} bg-secondary-container text-on-secondary-container uppercase tracking-wider`}>
                     5-Star Rated Storage
                   </span>
-                  {" "}
-                  <span className="bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-label-sm font-label-sm">
+                  <span className={`${chipBase} bg-primary-container text-on-primary-container font-normal`}>
                     Anti-Scale Heating Element
                   </span>
                 </div>
-                <h2 className="font-headline-xl text-headline-xl text-surface-bright tracking-tight mt-1 leading-tight">
-                  {"Get Perfect Hot Water "}
-                  <br />
-                  <span className="text-secondary-fixed">
-                    With Care For Your Loved Ones
-                  </span>
+                <h2 className={headline}>
+                  Get Perfect Hot Water <br className="hidden sm:block" />
+                  <span className="text-secondary-fixed">With Care For Your Loved Ones</span>
                 </h2>
-                <p className="font-body-lg text-body-lg text-on-primary-container max-w-xl">
+                <p className={`${paragraph} line-clamp-3 sm:line-clamp-none`}>
                   Superior Glassline tank protection, rust-free outer body, and high-pressure resistance suitable for high-rise apartments and Guwahati hard water.
                 </p>
-                <div className="flex items-center gap-space-md pt-4 flex-wrap">
-                  <Link className="inline-flex items-center gap-2 bg-secondary hover:bg-on-secondary-container text-on-secondary px-6 py-3 rounded-full font-label-lg text-label-lg font-semibold transition-all" to="/category/water-heaters">
-                    {"Shop Water Heaters "}
-                    <span className="material-symbols-outlined text-[18px]">
-                      water_drop
-                    </span>
+                <div className={btnRow}>
+                  <Link className={btnPrimaryLink} to="/category/water-heaters">
+                    Shop Water Heaters
+                    <span className="material-symbols-outlined text-[16px] sm:text-[18px]">water_drop</span>
                   </Link>
-                  {" "}
-                  <a className="inline-flex items-center gap-2 bg-surface-card/20 text-surface-bright px-6 py-3 rounded-full font-label-lg text-label-lg font-semibold" href="#order-form">
+                  <a className={btnGhostAlt} href="#order-form">
                     Wholesale Price List
                   </a>
                 </div>
               </div>
-              <div className="lg:col-span-5 flex items-center justify-center">
-                <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl">
-                  <img alt="Crompton Storage Water Heater" className="w-full h-80 object-cover rounded-2xl" src="https://lh3.googleusercontent.com/aida/AEtjO1X5y84lO7jt3z10jnenlVrKqlDoaNOVrtIpy8M4P8gxkLcrb4b6hQxEDYAOWApgtMX88eJK8Iu89KZ9yPfBlZ9L7-IjXgogSsybsm6xLEoL3dVyBynH2aArujmFunoxarD6gAM8ZymMXsiNH2FM7y7WOihvKmR-56XNb2mklFfkr1VGJToBF8bAAsYbikfbxdAQqTRp9yt9X5htDsDOSsej3yLEdMESukE_yIrqOIt_MuBveiXPoCKWKOI" />
+              <div className={imgCol}>
+                <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl lg:max-w-none">
+                  <img
+                    alt="Crompton Storage Water Heater"
+                    className={`${imgHeight} rounded-2xl object-cover`}
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1X5y84lO7jt3z10jnenlVrKqlDoaNOVrtIpy8M4P8gxkLcrb4b6hQxEDYAOWApgtMX88eJK8Iu89KZ9yPfBlZ9L7-IjXgogSsybsm6xLEoL3dVyBynH2aArujmFunoxarD6gAM8ZymMXsiNH2FM7y7WOihvKmR-56XNb2mklFfkr1VGJToBF8bAAsYbikfbxdAQqTRp9yt9X5htDsDOSsej3yLEdMESukE_yIrqOIt_MuBveiXPoCKWKOI"
+                  />
                 </div>
               </div>
             </div>
-            {/* Carousel Navigation Controls & Slides Bar */}
-            <div className="absolute bottom-4 left-6 right-6 md:left-12 md:right-12 flex items-center justify-between pointer-events-auto z-20">
-              <div className="flex items-center gap-2">
-                <button className={`h-2 rounded-full transition-all ${slide === 1 ? "w-8 bg-secondary-fixed" : "w-3 bg-surface-container-highest/40"}`} id="slide-btn-1" onClick={() => setSlide(1)}></button>
-                {" "}
-                <button className={`h-2 rounded-full hover:bg-surface-container-highest transition-all ${slide === 2 ? "w-8 bg-secondary-fixed" : "w-3 bg-surface-container-highest/40"}`} id="slide-btn-2" onClick={() => setSlide(2)}></button>
-                {" "}
-                <button className={`h-2 rounded-full hover:bg-surface-container-highest transition-all ${slide === 3 ? "w-8 bg-secondary-fixed" : "w-3 bg-surface-container-highest/40"}`} id="slide-btn-3" onClick={() => setSlide(3)}></button>
-                {" "}
-                <button className={`h-2 rounded-full hover:bg-surface-container-highest transition-all ${slide === 4 ? "w-8 bg-secondary-fixed" : "w-3 bg-surface-container-highest/40"}`} id="slide-btn-4" onClick={() => setSlide(4)}></button>
+
+            {/* ---------- Nav controls ---------- */}
+            <div className="pointer-events-auto absolute bottom-3 left-4 right-4 z-20 flex items-center justify-between sm:bottom-4 sm:left-8 sm:right-8 md:left-12 md:right-12">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                {[1, 2, 3, 4].map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    id={`slide-btn-${n}`}
+                    aria-label={`Go to slide ${n}`}
+                    onClick={() => setSlide(n)}
+                    className={`h-2 rounded-full transition-all ${
+                      slide === n
+                        ? "w-6 bg-secondary-fixed sm:w-8"
+                        : "w-2.5 bg-surface-container-highest/40 hover:bg-surface-container-highest sm:w-3"
+                    }`}
+                  ></button>
+                ))}
               </div>
               <div className="flex items-center gap-2">
-                <button className="w-9 h-9 rounded-full bg-surface-card/20 hover:bg-surface-card/40 text-on-primary flex items-center justify-center backdrop-blur-md transition-colors" onClick={prevSlide}>
-                  <span className="material-symbols-outlined text-[20px]">
-                    chevron_left
-                  </span>
+                <button
+                  type="button"
+                  aria-label="Previous slide"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-card/20 text-on-primary backdrop-blur-md transition-colors hover:bg-surface-card/40 sm:h-9 sm:w-9"
+                  onClick={prevSlide}
+                >
+                  <span className="material-symbols-outlined text-[18px] sm:text-[20px]">chevron_left</span>
                 </button>
-                {" "}
-                <button className="w-9 h-9 rounded-full bg-surface-card/20 hover:bg-surface-card/40 text-on-primary flex items-center justify-center backdrop-blur-md transition-colors" onClick={nextSlide}>
-                  <span className="material-symbols-outlined text-[20px]">
-                    chevron_right
-                  </span>
+                <button
+                  type="button"
+                  aria-label="Next slide"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-card/20 text-on-primary backdrop-blur-md transition-colors hover:bg-surface-card/40 sm:h-9 sm:w-9"
+                  onClick={nextSlide}
+                >
+                  <span className="material-symbols-outlined text-[18px] sm:text-[20px]">chevron_right</span>
                 </button>
               </div>
             </div>
           </div>
-          {/* Hero Sub-Bar: Quick Category Jump Explorer */}
         </div>
       </section>
       <ActionFeedback feedback={actions.feedback} />

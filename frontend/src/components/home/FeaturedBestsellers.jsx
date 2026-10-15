@@ -57,11 +57,30 @@ export default function FeaturedBestsellers() {
       <section className="w-full px-gutter py-space-xl bg-surface-canvas" id="featured-bestsellers-section">
         <div className="max-w-[1360px] mx-auto flex flex-col gap-space-lg">
           {/* Header & Category Badges & Navigation Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
-            <div className="flex items-center gap-2 overflow-x-auto max-w-full">
-              <h2 className="font-headline-md text-headline-md text-primary">
-                Best Selling Products
-              </h2>
+              <div className="flex w-full items-center justify-between gap-3">
+                <h2 className="min-w-0 flex-1 truncate font-headline-md text-xl font-bold text-primary sm:text-2xl lg:text-headline-md">
+                  Best Selling Products
+                </h2>
+
+                <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+                  <button
+                    type="button"
+                    aria-label="Previous Items"
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-border-subtle bg-surface-card text-on-surface shadow-sm transition-all hover:bg-surface-container hover:shadow sm:h-10 sm:w-10"
+                    onClick={() => scrollTrack(-320)}
+                  >
+                    <span className="material-symbols-outlined text-[18px] sm:text-[20px]">chevron_left</span>
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next Items"
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-border-subtle bg-surface-card text-on-surface shadow-sm transition-all hover:bg-surface-container hover:shadow sm:h-10 sm:w-10"
+                    onClick={() => scrollTrack(320)}
+                  >
+                    <span className="material-symbols-outlined text-[18px] sm:text-[20px]">chevron_right</span>
+                  </button>
+                </div>
+              </div>
               
               {/* <button className={tabClasses(category === "all")} data-category="all" onClick={() => filterBestsellers("all")}>
                 All
@@ -71,20 +90,7 @@ export default function FeaturedBestsellers() {
                   {c.name}
                 </button>
               ))} */}
-            </div>
-            <div className="flex items-center gap-2 self-end sm:self-center">
-              <button aria-label="Previous Items" className="w-10 h-10 rounded-full bg-surface-card hover:bg-surface-container border border-border-subtle text-on-surface flex items-center justify-center shadow-sm hover:shadow transition-all" onClick={() => scrollTrack(-320)}>
-                <span className="material-symbols-outlined text-[20px]">
-                  chevron_left
-                </span>
-              </button>
-              <button aria-label="Next Items" className="w-10 h-10 rounded-full bg-surface-card hover:bg-surface-container border border-border-subtle text-on-surface flex items-center justify-center shadow-sm hover:shadow transition-all" onClick={() => scrollTrack(320)}>
-                <span className="material-symbols-outlined text-[20px]">
-                  chevron_right
-                </span>
-              </button>
-            </div>
-          </div>
+           
           {/* Horizontal Multi-Item Product Carousel Track */}
           <div className="flex gap-6 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x" id="bestseller-carousel-track" ref={trackRef}>
             {loading &&
