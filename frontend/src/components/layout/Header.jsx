@@ -27,37 +27,47 @@ export default function Header() {
 
   return (
       <header className="fixed top-0 left-0 w-full z-50 shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
-        <div className="bg-primary-container text-on-primary py-space-xs px-gutter">
-          <div className="max-w-[1360px] mx-auto flex flex-wrap items-center justify-between text-body-sm font-body-sm">
-            <div className="flex items-center gap-space-lg flex-wrap">
-              <span className="flex items-center gap-space-xs">
-                <span className="material-symbols-outlined text-[16px] text-secondary-container">
+        <div className="bg-primary-container text-on-primary px-3 py-1.5 sm:px-gutter sm:py-space-xs">
+          <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-2 text-[11px] sm:gap-3 sm:text-body-sm sm:font-body-sm">
+            {/* Left: contact info */}
+            <div className="flex min-w-0 items-center gap-x-3 sm:gap-x-space-lg">
+              <a href="tel:+919957171355" className="flex shrink-0 items-center gap-1 whitespace-nowrap sm:gap-space-xs">
+                <span className="material-symbols-outlined text-[14px] text-secondary-container sm:text-[16px]">
                   call
                 </span>
                 +91 99571 71355
-              </span>
-              <span className="hidden sm:flex items-center gap-space-xs">
+              </a>
+
+              <a
+                href="mailto:anuragtraders2013@gmail.com"
+                className="hidden min-w-0 items-center gap-space-xs sm:flex"
+              >
                 <span className="material-symbols-outlined text-[16px] text-secondary-container">
                   mail
                 </span>
-                anuragtraders2013@gmail.com
-              </span>
-              <span className="hidden md:flex items-center gap-space-xs">
+                <span className="truncate">anuragtraders2013@gmail.com</span>
+              </a>
+
+              <span className="hidden items-center gap-space-xs md:flex">
                 <span className="material-symbols-outlined text-[16px] text-secondary-container">
                   location_on
                 </span>
                 Guwahati, Assam
               </span>
             </div>
-            <div className="flex items-center gap-space-md">
-              <Link to={ROUTES["bulk-orders"]} className="text-on-primary hover:text-secondary-fixed transition-colors">
-                Quick Order / Bulk Inquiry
+
+            {/* Right: bulk order + badge */}
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-space-md">
+              <Link
+                to={ROUTES["bulk-orders"]}
+                className="whitespace-nowrap text-on-primary transition-colors hover:text-secondary-fixed"
+              >
+                Bulk Order
               </Link>
-              <span className="text-outline-variant">
-                |
-              </span>
-              <span className="text-label-sm font-label-sm uppercase tracking-wide bg-secondary/30 text-on-primary px-2 py-0.5 rounded">
-                Authorized Crompton Dealer
+              <span className="text-outline-variant">|</span>
+              <span className="whitespace-nowrap rounded bg-secondary/30 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-on-primary sm:px-2 sm:text-label-sm sm:font-label-sm">
+                <span className="sm:hidden">Crompton Dealer</span>
+                <span className="hidden sm:inline">Authorized Crompton Dealer</span>
               </span>
             </div>
           </div>

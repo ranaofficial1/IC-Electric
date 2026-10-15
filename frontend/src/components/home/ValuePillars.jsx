@@ -52,14 +52,14 @@ export default function ValuePillars() {
               <span className="text-secondary-fixed font-label-sm text-label-sm uppercase font-bold tracking-wider">
                 The Anurag Traders Assurance
               </span>
-              <h2 className="font-headline-lg text-headline-lg text-surface-bright">
+              <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] text-surface-bright mt-1 sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 One Stop Solution
               </h2>
               <p className="font-body-lg text-body-lg text-on-primary-container">
                 Your one-stop destination for top-rated products, easy purchases, expert service, installation, and reliable manufacturer warranties—all designed to make your experience seamless and stress-free.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-4 w-full lg:w-auto flex-shrink-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto flex-shrink-0">
               <div className="bg-surface-card/10 backdrop-blur-md p-4 rounded-xl flex items-center gap-3">
                 <span className="material-symbols-outlined text-discount-emerald text-[28px]">
                   payments

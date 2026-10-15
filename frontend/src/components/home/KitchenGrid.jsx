@@ -36,7 +36,7 @@ export default function KitchenGrid() {
               <span className="text-secondary font-label-sm text-label-sm uppercase font-bold tracking-wider">
                 Culinary Engineering
               </span>
-              <h2 className="font-headline-lg text-headline-lg text-primary">
+                <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] tracking-tight text-primary sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 Kitchen Applications
               </h2>
               <p className="font-body-lg text-body-lg text-text-secondary max-w-2xl mt-1">

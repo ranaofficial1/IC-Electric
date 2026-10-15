@@ -64,7 +64,7 @@ export default function Footer() {
                 Collections
               </h4>
               <nav className="flex flex-col gap-space-xs" data-active-classes="text-secondary-fixed font-bold">
-                <Link to={ROUTES["premium-fans"]} aria-current="page" className="transition-colors text-secondary-fixed font-bold">
+                <Link to={ROUTES["premium-fans"]} aria-current="page" className="font-body-md text-body-md text-on-primary-container hover:text-on-primary transition-colors">
                   {"Ceiling "}
                   &amp;
                   {" Exhaust Fans"}
@@ -125,7 +125,7 @@ export default function Footer() {
           </div>
           <div className="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md text-body-sm font-body-sm text-on-primary-container">
             <p className="">
-              © 2025 Anurag Traders. All rights reserved. Authorized Distributor of Crompton Greaves Consumer Electricals Ltd.
+              © 2026 Anurag Traders. All rights reserved. Authorized Distributor of Crompton Greaves Consumer Electricals Ltd.
             </p>
             <div className="flex items-center gap-space-md">
               <Link to={ROUTES["privacy-policy"]} className="hover:text-on-primary transition-colors">
