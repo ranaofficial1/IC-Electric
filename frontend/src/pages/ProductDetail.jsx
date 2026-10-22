@@ -94,6 +94,22 @@ function ProductDetailView({ product }) {
     (line) => line.productId === product.id && optionsMatch(line.selectedOptions, selectedOptions)
   );
 
+  // Color-variant images: images tagged with a Color value (see
+  // product.imageOptionValues) are shown only while that color is selected.
+  // Untagged images are shared. Products without tagged images, or without a
+  // Color option, get product.images exactly as before.
+  const colorOption = (product.options || []).find((o) => /^colou?r$/i.test(o.name.trim()));
+  const selectedColor = colorOption ? selectedOptions[colorOption.name] : null;
+  const galleryImages = (() => {
+    const tags = product.imageOptionValues || [];
+    if (!selectedColor || !tags.some(Boolean)) return product.images;
+    const norm = (v) => String(v).trim().toLowerCase();
+    const forColor = product.images.filter((_, i) => tags[i] && norm(tags[i]) === norm(selectedColor));
+    if (forColor.length > 0) return forColor;
+    const shared = product.images.filter((_, i) => !tags[i]);
+    return shared.length > 0 ? shared : product.images;
+  })();
+
   function handleOptionChange(name, value) {
     setSelectedOptions((current) => ({ ...current, [name]: value }));
   }
@@ -143,7 +159,7 @@ function ProductDetailView({ product }) {
       />
 
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
-        <Gallery images={product.images} alt={product.name} />
+        <Gallery key={selectedColor || "default"} images={galleryImages} alt={product.name} />
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">

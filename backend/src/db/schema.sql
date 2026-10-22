@@ -126,6 +126,9 @@ CREATE TABLE IF NOT EXISTS product_images (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   product_id INT UNSIGNED NOT NULL,
   url VARCHAR(500) NOT NULL,
+  -- Optional: the variant value (e.g. the Color "Black") this image belongs to.
+  -- NULL = shared image, shown for every variant.
+  option_value VARCHAR(50) NULL,
   sort_order INT NOT NULL DEFAULT 0,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,

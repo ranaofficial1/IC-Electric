@@ -30,6 +30,7 @@ export function mapProduct(row) {
     hasOptions: Boolean(row.has_options),
     image: row.image,
     images: row.images,
+    imageOptionValues: row.imageOptionValues,
     description: row.description,
     specs: row.specs,
     options: row.options,

@@ -73,7 +73,22 @@ async function m001Subcategories(conn) {
   }
 }
 
-const MIGRATIONS = [["001_subcategories", m001Subcategories]];
+// 002 — color-variant images: product_images.option_value (nullable).
+// Existing rows get NULL = "shared image", so every current product keeps
+// showing exactly the same gallery until images are tagged with a color.
+async function m002ImageOptionValue(conn) {
+  if (!(await columnExists(conn, "product_images", "option_value"))) {
+    await conn.query(
+      "ALTER TABLE product_images ADD COLUMN option_value VARCHAR(50) NULL AFTER url"
+    );
+    console.log("  + product_images.option_value");
+  }
+}
+
+const MIGRATIONS = [
+  ["001_subcategories", m001Subcategories],
+  ["002_image_option_value", m002ImageOptionValue],
+];
 
 async function main() {
   const conn = await mysql.createConnection({

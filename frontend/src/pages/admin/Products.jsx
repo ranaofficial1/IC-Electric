@@ -29,14 +29,22 @@ const EMPTY_FORM = {
 // Multi-value fields are edited as plain text (one item per line) rather
 // than dynamic add/remove rows — keeps the form simple while still hitting
 // every field the backend's create/update endpoints accept.
-function imagesToText(images = []) {
-  return images.join("\n");
+// An image line is either a plain URL (shared by every variant) or
+// "Color value | URL" (shown only when that color is selected on the product page).
+function imagesToText(images = [], optionValues = []) {
+  return images
+    .map((url, i) => (optionValues[i] ? `${optionValues[i]} | ${url}` : url))
+    .join("\n");
 }
 function textToImages(text) {
   return text
     .split("\n")
     .map((line) => line.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map((line) => {
+      const match = line.match(/^([^|/:]+?)\s*\|\s*(\S.*)$/);
+      return match ? { url: match[2].trim(), optionValue: match[1].trim() } : line;
+    });
 }
 
 function specsToText(specs = {}) {
@@ -103,7 +111,7 @@ function toForm(product) {
     isBestSeller: Boolean(product.is_best_seller),
     isFeatured: Boolean(product.is_featured),
     isPublished: Boolean(product.is_published),
-    imagesText: imagesToText(product.images),
+    imagesText: imagesToText(product.images, product.imageOptionValues),
     specsText: specsToText(product.specs),
     optionsText: optionsToText(product.options),
   };
@@ -484,14 +492,14 @@ export default function AdminProducts() {
 
               <div>
                 <label htmlFor="p-images" className="mb-1.5 block text-sm font-medium text-neutral-700">
-                  Image URLs (one per line)
+                  Image URLs (one per line; prefix with "Color | " to show only for that color)
                 </label>
                 <textarea
                   id="p-images"
                   rows={3}
                   value={form.imagesText}
                   onChange={(e) => updateField("imagesText", e.target.value)}
-                  placeholder={"https://.../image-1.jpg\nhttps://.../image-2.jpg"}
+                  placeholder={"Black | https://.../black-1.jpg\nWhite | https://.../white-1.jpg"}
                   className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 font-mono text-xs focus:border-brand-500 focus:outline-none"
                 />
               </div>

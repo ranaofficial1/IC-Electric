@@ -116,7 +116,7 @@ async function findById(id) {
 
 async function attachRelations(product) {
   const [images] = await pool.query(
-    "SELECT url FROM product_images WHERE product_id = ? ORDER BY sort_order ASC",
+    "SELECT url, option_value FROM product_images WHERE product_id = ? ORDER BY sort_order ASC",
     [product.id]
   );
   const [specs] = await pool.query(
@@ -141,6 +141,9 @@ async function attachRelations(product) {
   return {
     ...product,
     images: images.map((i) => i.url),
+    // Parallel to `images`: the variant value (e.g. "Black") each image belongs
+    // to, or null for a shared image.
+    imageOptionValues: images.map((i) => i.option_value ?? null),
     specs: Object.fromEntries(specs.map((s) => [s.spec_key, s.spec_value])),
     options: Array.from(optionsMap.values()),
   };
@@ -238,8 +241,15 @@ async function updateRatingAggregate(productId) {
 async function replaceImages(productId, images = []) {
   await pool.query("DELETE FROM product_images WHERE product_id = ?", [productId]);
   if (images.length === 0) return;
-  const values = images.map((url, i) => [productId, url, i]);
-  await pool.query("INSERT INTO product_images (product_id, url, sort_order) VALUES ?", [values]);
+  const values = images.map((img, i) => {
+    const url = typeof img === "string" ? img : img.url;
+    const optionValue = typeof img === "string" ? null : img.optionValue || null;
+    return [productId, url, optionValue, i];
+  });
+  await pool.query(
+    "INSERT INTO product_images (product_id, url, option_value, sort_order) VALUES ?",
+    [values]
+  );
 }
 
 async function replaceSpecs(productId, specs = {}) {
