@@ -54,8 +54,8 @@ export default function FeaturedBestsellers() {
 
   return (
     <>
-      <section className="w-full px-gutter py-space-xl bg-surface-canvas" id="featured-bestsellers-section">
-        <div className="max-w-[1360px] mx-auto flex flex-col gap-space-lg">
+      <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-8 bg-surface-canvas" id="featured-bestsellers-section">
+        <div className="max-w-[1360px] mx-auto flex flex-col gap-8 lg:gap-8">
           {/* Header & Category Badges & Navigation Buttons */}
               <div className="flex w-full items-center justify-between gap-3">
                 <h2 className="min-w-0 flex-1 truncate font-headline-md text-xl font-bold text-primary sm:text-2xl lg:text-headline-md">
@@ -93,10 +93,10 @@ export default function FeaturedBestsellers() {
            
           {/* Horizontal Multi-Item Product Carousel Track */}
           <div
-  className="flex items-stretch gap-3 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x sm:gap-6"
-  id="bestseller-carousel-track"
-  ref={trackRef}
->
+              className="flex items-stretch gap-3 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x sm:gap-6"
+              id="bestseller-carousel-track"
+              ref={trackRef}
+            >
             {loading &&
               Array.from({ length: 4 }).map((_, i) => (
                 <div

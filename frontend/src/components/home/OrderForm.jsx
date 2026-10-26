@@ -35,8 +35,8 @@ export default function OrderForm() {
   }
 
   return (
-    <section className="w-full px-gutter py-space-xl bg-surface-canvas" id="order-form">
-      <div className="max-w-[1360px] mx-auto flex flex-col gap-space-lg">
+    <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-surface-canvas" id="order-form">
+      <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-16">
         {/* Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
@@ -55,7 +55,7 @@ export default function OrderForm() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: store details */}
-          <div className="lg:col-span-5 bg-surface-card rounded-2xl p-6 border border-border-subtle shadow-sm flex flex-col gap-5">
+          <div className="lg:col-span-5 lg:pr-6 flex flex-col gap-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-bold uppercase tracking-wider">
                 <span className="material-symbols-outlined text-[16px]">verified</span>
@@ -76,63 +76,44 @@ export default function OrderForm() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-4 rounded-xl border border-border-subtle bg-surface-canvas p-4">
-                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-surface-container text-secondary">
-                  <span className="material-symbols-outlined text-[22px]">location_on</span>
-                </span>
-                <div>
-                  <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">
-                    Address
-                  </span>
-                  <span className="block font-body-md text-body-md text-on-surface">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-start gap-4">
+                <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">location_on</span>
+                <div className="min-w-0">
+                  <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Address</span>
+                  <span className="mt-1 block font-body-md text-body-md text-on-surface leading-relaxed">
                     House no. 2, Panchoboro Path, near Nightingale Hospital, Krishnanagar, Guwahati, Assam 781005
                   </span>
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-xl border border-border-subtle bg-surface-canvas p-4">
-                <div className="flex items-center gap-4">
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-surface-container text-secondary">
-                    <span className="material-symbols-outlined text-[22px]">schedule</span>
-                  </span>
-                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">
-                    Working Hours
+              <div className="flex items-start gap-4">
+                <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">schedule</span>
+                <div className="min-w-0">
+                  <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Working Hours</span>
+                  <span className="mt-1 block font-title-md text-title-md font-bold text-primary">
+                    Mon – Sat: 9:30 AM – 8:00 PM
                   </span>
                 </div>
-                <span className="font-title-md text-title-md font-bold text-primary">
-                  Mon – Sat: 9:30 AM – 8:00 PM
-                </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a
-                  href={PHONE_HREF}
-                  className="flex items-center gap-3 rounded-xl border border-border-subtle bg-surface-canvas p-3.5 transition-colors hover:border-secondary-container"
-                >
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-secondary-fixed text-secondary">
-                    <span className="material-symbols-outlined text-[22px]">call</span>
+              <a href={PHONE_HREF} className="group flex items-start gap-4">
+                <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">call</span>
+                <span className="min-w-0">
+                  <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Direct Sales</span>
+                  <span className="mt-1 block font-title-md text-title-md font-bold text-primary transition-colors group-hover:text-secondary">+91 99571 71355</span>
+                </span>
+              </a>
+
+              <a href="mailto:anuragtraders2013@gmail.com" className="group flex items-start gap-4">
+                <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">mail</span>
+                <span className="min-w-0">
+                  <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Official Email</span>
+                  <span className="mt-1 block break-words font-title-md text-title-md font-bold text-primary transition-colors group-hover:text-secondary">
+                    anuragtraders2013@gmail.com
                   </span>
-                  <span className="min-w-0">
-                    <span className="block font-label-md text-label-md text-text-muted">Direct Sales</span>
-                    <span className="block font-title-md text-title-md font-bold text-primary">+91 99571 71355</span>
-                  </span>
-                </a>
-                <a
-                  href="mailto:anuragtraders2013@gmail.com"
-                  className="flex items-center gap-3 rounded-xl border border-border-subtle bg-surface-canvas p-3.5 transition-colors hover:border-secondary-container"
-                >
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-secondary-fixed text-secondary">
-                    <span className="material-symbols-outlined text-[22px]">mail</span>
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block font-label-md text-label-md text-text-muted">Official Email</span>
-                    <span className="block truncate font-title-md text-title-md font-bold text-primary">
-                      anuragtraders2013@gmail.com
-                    </span>
-                  </span>
-                </a>
-              </div>
+                </span>
+              </a>
             </div>
 
             <a
@@ -147,7 +128,7 @@ export default function OrderForm() {
           </div>
 
           {/* Right: inquiry form */}
-          <div className="lg:col-span-7 bg-surface-card rounded-2xl p-6 md:p-8 border border-border-subtle shadow-lg">
+          <div className="lg:col-span-7 bg-surface-card rounded-2xl p-6 md:p-8 border border-border-subtle">
             <div className="flex items-start justify-between gap-4 pb-6 border-b border-border-subtle">
               <div>
                 <span className="font-label-sm text-label-sm uppercase font-bold text-secondary tracking-wider">
@@ -217,7 +198,7 @@ export default function OrderForm() {
         </div>
 
         {/* Bottom: support & services */}
-        <div className="bg-surface-card rounded-2xl p-6 md:p-8 border border-border-subtle shadow-sm">
+        <div className="bg-surface-card rounded-2xl p-6 md:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b border-border-subtle">
             <div>
               <h3 className="flex items-center gap-2.5 font-headline-sm text-headline-sm text-primary">
@@ -238,7 +219,7 @@ export default function OrderForm() {
               <a
                 key={s.title}
                 href={PHONE_HREF}
-                className="group flex items-center gap-4 rounded-xl border border-border-subtle bg-surface-canvas p-4 transition-colors hover:border-secondary-container"
+                className="group flex items-center gap-4 rounded-xl bg-surface-canvas p-4 transition-colors hover:border-secondary-container"
               >
                 <span className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl text-on-primary ${s.iconBg}`}>
                   <span className="material-symbols-outlined text-[28px]">{s.icon}</span>

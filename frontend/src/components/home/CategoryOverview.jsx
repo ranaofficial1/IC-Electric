@@ -21,7 +21,7 @@ export default function CategoryOverview() {
 
   return (
     <>
-      <section className="w-full px-gutter py-space-lg bg-surface">
+      <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-surface">
         <div className="max-w-[1360px] mx-auto text-center flex flex-col items-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm uppercase tracking-wider mb-2">
             <span className="w-2 h-2 rounded-full bg-discount-emerald animate-pulse"></span>

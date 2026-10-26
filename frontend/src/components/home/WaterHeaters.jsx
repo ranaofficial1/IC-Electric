@@ -18,8 +18,8 @@ export default function WaterHeaters() {
 
   return (
     <>
-      <section className="w-full px-gutter pt-10 pb-14 bg-primary text-on-primary" id="water-heaters">
-        <div className="max-w-[1360px] mx-auto flex flex-col gap-space-lg">
+      <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-primary text-on-primary" id="water-heaters">
+        <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-16">
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
             <div>
               <span className="text-secondary-container font-label-sm text-label-sm uppercase font-bold tracking-wider">

@@ -25,12 +25,12 @@ export default function HomeAppliances() {
 
   return (
     <>
-      <section className="w-full px-gutter py-space-xl bg-surface" id="home-appliances">
-        <div className="max-w-[1360px] mx-auto flex flex-col gap-space-lg">
+      <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-surface" id="home-appliances">
+        <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-16">
           {/* Split Hero Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-surface-container-low p-8 rounded-2xl shadow-sm">
-            <div className="lg:col-span-7 flex flex-col gap-space-sm">
-              <span className="text-secondary font-label-sm text-label-sm uppercase font-bold tracking-wider">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center bg-surface-container-low p-6 sm:p-10 lg:p-14 rounded-2xl shadow-sm border border-border-subtle">
+            <div className="lg:col-span-7 min-w-0 flex flex-col gap-4 sm:gap-5">
+              <span className="text-secondary font-label-sm text-label-sm uppercase font-bold tracking-wider mb-1">
                 {"Fabric Care "}
                 &amp;
                 {" Winter Comfort"}
@@ -38,11 +38,11 @@ export default function HomeAppliances() {
               <h2 className="font-headline-lg text-[28px] font-bold leading-[1.3] tracking-tight text-primary sm:text-[28px] sm:leading-[1.25] lg:text-headline-lg">
                 Home Applications
               </h2>
-              <p className="font-body-lg text-body-lg text-text-secondary">
+              <p className="font-body-lg text-body-lg text-text-secondary leading-relaxed max-w-2xl">
                 Each product is meticulously crafted to provide long-lasting reliability that blends in harmoniously with putting the 'Home' in home appliances. From instant warmth convector heaters to anti-drip heavy dry irons.
               </p>
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-                <Link className="inline-flex items-center gap-2 bg-secondary text-on-secondary px-6 py-2.5 rounded-full font-label-md text-label-md font-bold hover:bg-on-secondary-container transition-all shadow-md" to={`/category/${homeSlug}`}>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 pt-3 sm:pt-4">
+                <Link className="inline-flex items-center gap-2 bg-secondary text-on-secondary px-8 py-3 rounded-full font-label-md text-label-md font-bold hover:bg-on-secondary-container transition-all shadow-md" to={`/category/${homeSlug}`}>
                   {"Explore Collection "}
                   <span className="material-symbols-outlined text-[18px]">
                     arrow_forward
@@ -54,14 +54,14 @@ export default function HomeAppliances() {
                 </span>
               </div>
             </div>
-            <div className="lg:col-span-5">
-              <div className="rounded-xl overflow-hidden">
-                <img alt="Crompton Brio Dry Iron & Home Care Application" className="w-full h-64 object-cover" src="https://anuragtraders.com/wp-content/uploads/Home-Applications-Slide-Banner.webp" />
+            <div className="lg:col-span-5 min-w-0">
+              <div className="rounded-2xl overflow-hidden shadow-md">
+                <img alt="Crompton Brio Dry Iron & Home Care Application" className="w-full h-56 sm:h-72 lg:h-[22rem] object-cover" src="https://anuragtraders.com/wp-content/uploads/Home-Applications-Slide-Banner.webp" />
               </div>
             </div>
           </div>
           {/* Real products */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {loading &&
               Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="bg-surface-card rounded-2xl h-[400px] shadow-sm animate-pulse" aria-hidden="true" />

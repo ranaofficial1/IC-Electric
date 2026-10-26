@@ -29,8 +29,8 @@ export default function KitchenGrid() {
 
   return (
     <>
-      <section className="w-full px-gutter py-space-xl bg-surface-canvas" id="kitchen-grid">
-        <div className="max-w-[1360px] mx-auto flex flex-col gap-space-lg">
+      <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-surface-canvas" id="kitchen-grid">
+        <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-secondary font-label-sm text-label-sm uppercase font-bold tracking-wider">

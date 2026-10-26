@@ -85,7 +85,7 @@ export default function HeroShowcase() {
   return (
     <>
       {/* Mobile pe edge-to-edge (no side padding, no rounded), sm+ pe gutter wapas */}
-      <section className="w-full px-0 py-0 sm:px-gutter sm:py-space-md">
+      <section className="w-full px-0 py-0 sm:px-gutter sm:py-space-xl">
         <div className="mx-auto max-w-[1360px]">
           <div className="relative w-full overflow-hidden bg-primary shadow-xl sm:rounded-2xl">
             {/* ---------- Slide 1: Mixer ---------- */}
