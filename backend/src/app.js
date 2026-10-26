@@ -17,8 +17,8 @@ const app = express();
 // =========================
 // CORS 
 // =========================
-const FRONTEND_URL = "https://ic-electric.vercel.app";
-// const FRONTEND_URL = "http://localhost:5173"; 
+// const FRONTEND_URL = "https://ic-electric.vercel.app";
+const FRONTEND_URL = "http://localhost:5173"; 
 
 app.use(
   cors({
