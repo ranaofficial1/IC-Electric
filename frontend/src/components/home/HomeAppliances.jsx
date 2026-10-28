@@ -29,8 +29,8 @@ export default function HomeAppliances() {
         <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-16">
           {/* Split Hero Header */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center bg-surface-container-low p-6 sm:p-10 lg:p-14 rounded-2xl shadow-sm border border-border-subtle">
-            <div className="lg:col-span-7 min-w-0 flex flex-col gap-4 sm:gap-5">
-              <span className="text-secondary font-label-sm text-label-sm uppercase font-bold tracking-wider mb-1">
+            <div className="lg:col-span-7 min-w-0 flex flex-col gap-1">
+              <span className="text-secondary font-label-sm text-label-sm uppercase font-bold tracking-wider">
                 {"Fabric Care "}
                 &amp;
                 {" Winter Comfort"}
@@ -49,13 +49,13 @@ export default function HomeAppliances() {
                   </span>
                 </Link>
                 {" "}
-                <span className="text-text-muted font-body-sm text-body-sm">
+                {/* <span className="text-text-muted font-body-sm text-body-sm">
                   Guwahati Showroom Warranty Assured
-                </span>
+                </span> */}
               </div>
             </div>
             <div className="lg:col-span-5 min-w-0">
-              <div className="rounded-2xl overflow-hidden shadow-md">
+              <div className="rounded-2xl overflow-hidden">
                 <img alt="Crompton Brio Dry Iron & Home Care Application" className="w-full h-56 sm:h-72 lg:h-[22rem] object-cover" src="https://anuragtraders.com/wp-content/uploads/Home-Applications-Slide-Banner.webp" />
               </div>
             </div>

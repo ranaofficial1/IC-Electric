@@ -5,6 +5,8 @@ import { ROUTES } from "../../config/navRoutes.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useCart } from "../../context/CartContext.jsx";
 import { useWishlist } from "../../context/WishlistContext.jsx";
+import logo from "../../assets/images/ic-logo.webp";
+
 
 // Header ported 1:1 from the reference design (code.html). Wired to the app:
 // live cart/wishlist counts + total, route links, account link, search.
@@ -76,7 +78,7 @@ export default function Header() {
           <div className="max-w-[1360px] mx-auto flex items-center justify-between gap-space-md">
             <div className="flex items-center gap-space-md flex-shrink-0">
               <Link to="/">
-              <img alt="Image" className="h-8 w-auto object-contain" src="https://anuragtraders.com/wp-content/uploads/AGT-Blue-Logo-2.webp" />
+              <img alt="Image" className="h-12 w-auto object-contain" src={logo} />
           </Link>
             </div>
             <HeaderSearch />

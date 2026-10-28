@@ -47,10 +47,10 @@ export default function OrderForm() {
               Get In Touch &amp; Experience Center
             </h2>
           </div>
-          <span className="flex items-center gap-1.5 text-text-muted font-body-md text-body-md">
+          {/* <span className="flex items-center gap-1.5 text-text-muted font-body-md text-body-md">
             <span className="material-symbols-outlined text-discount-emerald text-[20px]">schedule</span>
             Response within 4 business hours
-          </span>
+          </span> */}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -61,27 +61,27 @@ export default function OrderForm() {
                 <span className="material-symbols-outlined text-[16px]">verified</span>
                 Authorized Distributor Hub
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-discount-emerald/15 text-discount-emerald font-label-md text-label-md font-semibold">
+              {/* <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-discount-emerald/15 text-discount-emerald font-label-md text-label-md font-semibold">
                 <span className="w-2 h-2 rounded-full bg-discount-emerald"></span>
                 Open Today
-              </span>
+              </span> */}
             </div>
 
-            <div>
+            {/* <div>
               <h3 className="font-headline-sm text-headline-sm text-primary">
                 Anurag Traders Experience Center &amp; Warehouse
               </h3>
               <p className="mt-2 font-body-md text-body-md text-text-secondary">
                 Authorized Crompton consumer electricals wholesale inventory and retail demo destination.
               </p>
-            </div>
+            </div> */}
 
             <div className="flex flex-col gap-6">
               <div className="flex items-start gap-4">
                 <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">location_on</span>
                 <div className="min-w-0">
                   <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Address</span>
-                  <span className="mt-1 block font-body-md text-body-md text-on-surface leading-relaxed">
+                  <span className="mt-1 block font-title-md text-title-md font-medium text-primary">
                     House no. 2, Panchoboro Path, near Nightingale Hospital, Krishnanagar, Guwahati, Assam 781005
                   </span>
                 </div>
@@ -91,7 +91,7 @@ export default function OrderForm() {
                 <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">schedule</span>
                 <div className="min-w-0">
                   <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Working Hours</span>
-                  <span className="mt-1 block font-title-md text-title-md font-bold text-primary">
+                  <span className="mt-1 block font-title-md text-title-md font-medium text-primary">
                     Mon – Sat: 9:30 AM – 8:00 PM
                   </span>
                 </div>
@@ -101,7 +101,7 @@ export default function OrderForm() {
                 <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">call</span>
                 <span className="min-w-0">
                   <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Direct Sales</span>
-                  <span className="mt-1 block font-title-md text-title-md font-bold text-primary transition-colors group-hover:text-secondary">+91 99571 71355</span>
+                  <span className="mt-1 block font-title-md text-title-md font-medium text-primary transition-colors group-hover:text-secondary">+91 99571 71355</span>
                 </span>
               </a>
 
@@ -109,7 +109,7 @@ export default function OrderForm() {
                 <span className="material-symbols-outlined flex-shrink-0 text-[24px] text-secondary">mail</span>
                 <span className="min-w-0">
                   <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">Official Email</span>
-                  <span className="mt-1 block break-words font-title-md text-title-md font-bold text-primary transition-colors group-hover:text-secondary">
+                  <span className="mt-1 block break-words font-title-md text-title-md font-medium text-primary transition-colors group-hover:text-secondary">
                     anuragtraders2013@gmail.com
                   </span>
                 </span>
@@ -131,10 +131,10 @@ export default function OrderForm() {
           <div className="lg:col-span-7 bg-surface-card rounded-2xl p-6 md:p-8 border border-border-subtle">
             <div className="flex items-start justify-between gap-4 pb-6 border-b border-border-subtle">
               <div>
-                <span className="font-label-sm text-label-sm uppercase font-bold text-secondary tracking-wider">
+                {/* <span className="font-label-sm text-label-sm uppercase font-bold text-secondary tracking-wider">
                   Direct Customer Desk
-                </span>
-                <h3 className="mt-1 font-headline-md text-headline-md text-primary">Connect With Anurag Traders</h3>
+                </span> */}
+                <h3 className="mt-1 font-headline-md text-headline-md text-primary">Connect With IC Electricals</h3>
                 <p className="mt-1 font-body-lg text-body-lg text-text-secondary">
                   Have a query about retail purchase, bulk project quotation, or technician support?
                 </p>
@@ -202,16 +202,16 @@ export default function OrderForm() {
           <div className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b border-border-subtle">
             <div>
               <h3 className="flex items-center gap-2.5 font-headline-sm text-headline-sm text-primary">
-                <span className="h-2.5 w-2.5 rounded-full bg-secondary"></span>
+                {/* <span className="h-2.5 w-2.5 rounded-full bg-secondary"></span> */}
                 Direct Support &amp; Services
               </h3>
               <p className="mt-1 font-body-md text-body-md text-text-muted">
                 Prompt assistance, warranty registrations, and certified technical deployments across Guwahati and Assam.
               </p>
             </div>
-            <span className="rounded-full bg-surface-container px-4 py-1.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary">
+            {/* <span className="rounded-full bg-surface-container px-4 py-1.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary">
               Guwahati Desk Assistance
-            </span>
+            </span> */}
           </div>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-5">

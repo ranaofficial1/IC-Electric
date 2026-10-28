@@ -4,6 +4,7 @@ import Icon from "./Icon.jsx";
 const FIT_CLASSES = {
   contain: "object-contain",
   cover: "object-cover",
+  cn: "object-cover object-top",
 };
 
 export default function MediaTile({ src, alt = "", icon = "star", accent = "#005cba", className = "", fit = "contain" }) {

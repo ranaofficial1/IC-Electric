@@ -3,7 +3,7 @@ export default function ValuePillars() {
   return (
     <>
       <section className="w-full px-gutter-mobile sm:px-gutter pb-16 sm:pb-20 lg:pb-24 bg-surface">
-        <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-16">
+        <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-[8rem]">
           {/* 3 Highlights from Original Content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <div className="bg-surface-card rounded-2xl p-8 flex flex-col items-center text-center">
@@ -47,7 +47,7 @@ export default function ValuePillars() {
             </div>
           </div>
           {/* One Stop Solution Banner Strip */}
-          <div className="bg-primary text-on-primary rounded-2xl p-6 sm:p-10 lg:p-14 shadow-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-8 lg:gap-12">
+          {/* <div className="bg-primary text-on-primary rounded-2xl p-6 sm:p-10 lg:p-14 shadow-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-8 lg:gap-12">
             <div className="flex flex-col gap-4 max-w-xl min-w-0">
               <span className="text-secondary-fixed font-label-sm text-label-sm uppercase font-bold tracking-wider">
                 The Anurag Traders Assurance
@@ -119,7 +119,7 @@ export default function ValuePillars() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </>

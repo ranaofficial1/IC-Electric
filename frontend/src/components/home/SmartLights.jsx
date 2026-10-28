@@ -58,20 +58,10 @@ export default function SmartLights() {
           {/* Prominent Spotlight Feature Banner */}
           <div className="relative rounded-2xl overflow-hidden shadow-xl bg-primary border border-border-subtle group">
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-              <div className="lg:col-span-7 min-w-0 p-6 sm:p-10 lg:p-14 z-10 flex flex-col justify-center text-on-primary gap-4 sm:gap-5">
+              <div className="lg:col-span-7 min-w-0 p-6 sm:p-10 lg:p-14 z-10 flex flex-col justify-center text-on-primary gap-4">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-label-sm font-label-sm font-bold uppercase tracking-wider">
                     Signature Luminaire Range
-                  </span>
-                  {" "}
-                  <span className="bg-surface-card/20 text-surface-bright backdrop-blur-md px-3 py-1 rounded-full text-label-sm font-label-sm">
-                    {"High CRI "}
-                    &gt;
-                    {" 80"}
-                  </span>
-                  {" "}
-                  <span className="bg-surface-card/20 text-surface-bright backdrop-blur-md px-3 py-1 rounded-full text-label-sm font-label-sm">
-                    Surge Protected 4kV
                   </span>
                 </div>
                 <h3 className="font-headline-md text-headline-md text-surface-bright leading-tight tracking-tight mt-1">
@@ -82,22 +72,16 @@ export default function SmartLights() {
                 </p>
                 <div className="flex items-center gap-4 pt-3 sm:pt-4 flex-wrap">
                   <a className="inline-flex items-center gap-2 bg-secondary hover:bg-on-secondary-container text-on-secondary px-8 py-3 rounded-full font-label-md text-label-md font-bold transition-all shadow-md" href="#order-form">
-                    {"Wholesale Price List "}
-                    <span className="material-symbols-outlined text-[18px]">
-                      download
-                    </span>
-                  </a>
-                  {" "}
-                  <a className="inline-flex items-center gap-2 bg-surface-card/10 hover:bg-surface-card/20 text-surface-bright px-7 py-3 rounded-full font-label-md text-label-md font-semibold backdrop-blur-md transition-colors" href="#order-form">
-                    {"Schedule Lighting Audit "}
+                    Explore Collection 
                     <span className="material-symbols-outlined text-[18px]">
                       arrow_forward
                     </span>
                   </a>
+                  
                 </div>
               </div>
               <div className="lg:col-span-5 relative h-56 sm:h-72 lg:h-full lg:min-h-[22rem] overflow-hidden">
-                <img alt="Home lighting reimagined with Crompton lights banner" className="w-full h-full object-cover object-left group-hover:scale-105 transition-transform duration-700" src="https://anuragtraders.com/wp-content/uploads/Lights-Main-Banner.webp" />
+                <img alt="Home lighting" className="w-full h-full object-cover object-left group-hover:scale-105 transition-transform duration-700" src="https://anuragtraders.com/wp-content/uploads/Lights-Main-Banner.webp" />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary via-transparent to-transparent lg:block hidden"></div>
               </div>
             </div>
@@ -130,24 +114,18 @@ export default function SmartLights() {
               })}
             </div>
           )}
-          {/* Quick Wholesale Dealer Reassurance Banner */}
-          <div className="bg-surface-card rounded-2xl p-6 sm:p-10 lg:p-12 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+
+
+          {/* <div className="bg-surface-card rounded-2xl p-6 sm:p-10 lg:p-12 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="flex-1 min-w-0">
-              {/* Status badges */}
               <div className="flex flex-wrap items-center gap-2 mb-5">
                 <span className="px-3 py-1 rounded-full bg-discount-emerald/20 text-discount-emerald text-label-sm font-label-sm font-bold uppercase tracking-wider flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-discount-emerald" />
                   Ready for Immediate Dispatch
                 </span>
-                <span className="px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm font-bold uppercase tracking-wider flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[16px]">
-                    warehouse
-                  </span>
-                  Guwahati Central Hub
-                </span>
+              
               </div>
 
-              {/* Heading + description (text unchanged) */}
               <h3 className="font-headline-md text-headline-sm sm:text-headline-md font-bold tracking-tight text-primary max-w-3xl">
                 {"Guwahati Warehouse Ready Stock for Contractors "}
                 &amp;
@@ -157,7 +135,6 @@ export default function SmartLights() {
                 Immediate billing with GST invoicing and direct bulk dispatch across all North-East states.
               </p>
 
-              {/* Feature chips */}
               <div className="flex flex-wrap gap-3 mt-6">
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md font-medium">
                   <span className="material-symbols-outlined text-[18px] text-secondary">
@@ -165,18 +142,7 @@ export default function SmartLights() {
                   </span>
                   Instant GST Invoicing
                 </span>
-                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md font-medium">
-                  <span className="material-symbols-outlined text-[18px] text-discount-emerald">
-                    price_check
-                  </span>
-                  Direct Project Pricing
-                </span>
-                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md font-medium">
-                  <span className="material-symbols-outlined text-[18px] text-energy-amber">
-                    local_shipping
-                  </span>
-                  All 8 NE States Covered
-                </span>
+               
               </div>
             </div>
 
@@ -186,7 +152,7 @@ export default function SmartLights() {
                 east
               </span>
             </a>
-          </div>
+          </div> */}
         </div>
       </section>
     </>

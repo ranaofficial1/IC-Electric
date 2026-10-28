@@ -52,7 +52,7 @@ export default function FansShowcase() {
             </div>
             <div className="lg:col-span-6 min-w-0">
               <div className="relative rounded-2xl overflow-hidden shadow-md">
-                <img alt="Impart Grandeur to your living space with Crompton fans" className="w-full h-56 sm:h-72 lg:h-[22rem] object-cover object-top" src="https://anuragtraders.com/wp-content/uploads/Fan-Banner.webp" />
+                <img alt="Impart Grandeu" className="w-full h-56 sm:h-72 lg:h-[22rem] object-cover object-top" src="https://anuragtraders.com/wp-content/uploads/Crompton-Silent-Pro-Blossom-Smart-Fan-DB-7-1.webp" />
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function FansShowcase() {
                   >
                     <div className="relative overflow-hidden bg-surface-container-low h-56 sm:h-60 lg:h-64">
                       <div className="h-full w-full group-hover:scale-105 transition-transform duration-500">
-                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "fan"} accent={tile.accent || undefined} fit="cover" />
+                        <MediaTile src={image} alt={tile.name} icon={tile.icon || "fan"} accent={tile.accent || undefined} fit="contain" />
                       </div>
                       {content.badge && (
                         <span className="absolute top-3 left-3 bg-surface-card/90 text-on-surface text-label-sm font-label-sm px-2.5 py-1 rounded-md font-bold">

@@ -9,6 +9,7 @@ const CATEGORY_ICONS = {
   fans: "mode_fan",
   "water-heaters": "shower",
   appliances: "kitchen",
+  "home-appliances": "iron", 
   "smart-lights": "tungsten",
 };
 
@@ -22,19 +23,19 @@ export default function CategoryOverview() {
   return (
     <>
       <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-surface">
-        <div className="max-w-[1360px] mx-auto text-center flex flex-col items-center">
+        <div className="max-w-[1360px] mx-auto text-center flex flex-col items-center"  >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm uppercase tracking-wider mb-2">
             <span className="w-2 h-2 rounded-full bg-discount-emerald animate-pulse"></span>
             {" Authorized Crompton Hub Guwahati"}
           </div>
           <h2 className="font-headline-lg text-headline-lg text-primary max-w-full">
-            Anurag Traders | Crompton Electrical Distributors
+            IC Electricals | Crompton Electrical Distributors
           </h2>
           <p className="font-body-lg text-body-lg text-text-secondary max-w-4xl mt-2">
             Your go-to destination for authentic Crompton Electrical Distributors in Guwahati. Supplying certified, energy-efficient solutions for residential complexes, architects, and commercial projects across Assam.
           </p>
           {/* Category Discovery Grid — real categories */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 w-full mt-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 w-full mt-8">
             {loading &&
               Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="bg-surface-card rounded-md p-3 shadow-sm h-[50px] animate-pulse" aria-hidden="true" />

@@ -2,50 +2,32 @@ import MasterDetailMenu from "./MasterDetailMenu.jsx";
 import { productsIn, useMenuCategory, useMenuProducts } from "../../../hooks/useMenuData.js";
 import { ROUTES } from "../../../config/navRoutes.js";
 
-const ROOT = "appliances";
-const SLUG = "fabric-care"; // what "Home Appliances" points at (see navRoutes.js)
-const ICONS = { "food-preparation": "blender", cooking: "skillet", brewing: "coffee_maker", "fabric-care": "iron" };
+const SLUG = "home-appliances";
+// Apne home-appliances ke subcategory slugs yahan map karo (icon names MasterDetailMenu wale hi).
+const ICONS = { "fabric-care": "iron" };
 
-// Home Appliances: Kitchen's master–detail layout. The Home Appliances range
-// comes first (and is shown by default); the other appliance ranges that used
-// to be "Also explore" chips are rail entries beneath it.
+// Home Appliances: Kitchen jaisa master–detail. Left par subcategory hover karo,
+// right ka product grid us range par switch ho jata hai.
 export default function HomeAppliancesMenu() {
-  const { node: sub } = useMenuCategory(SLUG);
-  const { node: root } = useMenuCategory(ROOT);
-  const { products, loading } = useMenuProducts(ROOT);
-  const others = (root?.children || []).filter((c) => c.slug !== SLUG);
+  const { node } = useMenuCategory(SLUG);
+  const { products, loading } = useMenuProducts(SLUG);
 
-  const items = [
-    ...(sub
-      ? [
-          {
-            key: sub.slug,
-            name: sub.name || "Home Appliances",
-            to: ROUTES["home-appliances"],
-            icon: ICONS[sub.slug],
-            subtitle: sub.description || "Everyday helpers for a well-kept home — irons and garment care.",
-            products: productsIn(products, SLUG),
-          },
-        ]
-      : []),
-    ...others.map((c) => ({
-      key: c.slug,
-      name: c.name,
-      to: `/category/${c.slug}`,
-      icon: ICONS[c.slug],
-      products: productsIn(products, c.slug),
-    })),
-  ];
+  const items = (node?.children || []).map((sub) => ({
+    key: sub.slug,
+    name: sub.name,
+    to: `/category/${sub.slug}`,
+    icon: ICONS[sub.slug],
+    products: productsIn(products, sub.slug),
+  }));
 
   return (
     <MasterDetailMenu
       railLabel="Home appliances"
       items={items}
-      ready={Boolean(sub)}
+      ready={Boolean(node)}
       loading={loading}
-      viewAll={{ to: ROUTES["home-appliances"], label: "Shop now" }}
-      tileIcon="iron"
-      accent="#D97706"
+      viewAll={{ to: ROUTES["home-appliances"], label: "All home appliances" }}
+      accent={node?.accent}
     />
   );
 }

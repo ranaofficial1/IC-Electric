@@ -19,7 +19,7 @@ export default function WaterHeaters() {
   return (
     <>
       <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-primary text-on-primary" id="water-heaters">
-        <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-16">
+        <div className="max-w-[1360px] mx-auto flex flex-col gap-12 lg:gap-10">
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
             <div>
               <span className="text-secondary-container font-label-sm text-label-sm uppercase font-bold tracking-wider">
@@ -33,7 +33,7 @@ export default function WaterHeaters() {
                 Enjoy instant access to perfectly heated water with Crompton's advanced water heater range. Smart heating modes, 5-star energy ratings, and rust-proof glassline tanks saving power daily.
               </p>
             </div>
-            <Link className="inline-flex items-center gap-2 bg-secondary-container hover:bg-secondary text-primary font-bold px-6 py-2.5 rounded-full font-label-md text-label-md transition-all shadow-md" to={`/category/${HEATERS_SLUG}`}>
+            <Link className="inline-flex items-center gap-2 bg-secondary hover:secondary-container text-on-secondary font-bold px-6 py-2.5 rounded-full font-label-md text-label-md transition-all shadow-md" to={`/category/${HEATERS_SLUG}`}>
               {"Explore Complete Range "}
               <span className="material-symbols-outlined text-[18px]">
                 arrow_forward

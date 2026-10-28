@@ -1,7 +1,7 @@
 import MasterDetailMenu from "./MasterDetailMenu.jsx";
 import { productsIn, useMenuCategory, useMenuProducts } from "../../../hooks/useMenuData.js";
 
-const SLUG = "appliances";
+const SLUG = "kitchen-appliances";
 const ICONS = { "food-preparation": "blender", cooking: "skillet", brewing: "coffee_maker", "fabric-care": "iron" };
 
 // Kitchen Appliances: master–detail. Hover a subcategory on the left and the

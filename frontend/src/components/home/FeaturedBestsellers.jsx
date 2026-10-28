@@ -109,17 +109,17 @@ export default function FeaturedBestsellers() {
               <p className="py-10 font-body-md text-body-md text-text-muted">No products in this category yet.</p>
             )}
             {!loading &&
-    products.map((product) => (
-      <div
-        key={product.id}
-        className="bestseller-item flex w-[165px] flex-shrink-0 snap-start sm:w-80"
-      >
-        <ProductCard product={product} className="w-full" />
-      </div>
-    ))}
-</div>
+              products.map((product) => (
+                <div
+                  key={product.id}
+                  className="bestseller-item flex w-[165px] flex-shrink-0 snap-start sm:w-80"
+                >
+                  <ProductCard product={product} className="w-full" />
+                </div>
+              ))}
+          </div>
           {/* Carousel Indicator Strip */}
-          <div className="flex items-center justify-between pt-2 border-t border-border-subtle">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-7 h-2 rounded-full bg-secondary"></span>
               {" "}
@@ -127,9 +127,9 @@ export default function FeaturedBestsellers() {
               {" "}
               <span className="w-2.5 h-2 rounded-full bg-surface-container-highest"></span>
             </div>
-            <span className="font-body-sm text-body-sm text-text-muted">
+            {/* <span className="font-body-sm text-body-sm text-text-muted">
               {`Showing ${products.length} Authorized Crompton ${needsFallback ? "Products" : "Bestsellers"} • Direct Guwahati Dispatch`}
-            </span>
+            </span> */}
           </div>
         </div>
       </section>

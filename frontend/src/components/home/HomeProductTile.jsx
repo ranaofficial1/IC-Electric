@@ -39,7 +39,7 @@ export default function HomeProductTile({ product, variant = "kitchen", actions 
       <div className="relative bg-surface-container-low rounded-xl p-4 flex items-center justify-center h-56 overflow-hidden">
         <span
           className={`absolute top-2 left-2 z-10 font-label-sm text-label-sm px-2 py-0.5 rounded font-bold ${
-            variant === "home" ? "bg-energy-amber text-on-primary" : "bg-secondary text-on-secondary"
+            variant === "home" ? "bg-secondary text-on-primary" : "bg-secondary text-on-secondary"
           }`}
         >
           {product.subcategoryName || product.categoryName}
@@ -56,15 +56,15 @@ export default function HomeProductTile({ product, variant = "kitchen", actions 
         </Link>
       </div>
       <div className="flex flex-col flex-1 mt-4">
-        <span className="font-body-sm text-body-sm text-text-muted">{product.categoryName}</span>
+        {/* <span className="font-body-sm text-body-sm text-text-muted">{product.categoryName}</span> */}
         <h3 className="font-title-lg text-title-lg text-on-surface mt-0.5 group-hover:text-secondary transition-colors">
           <Link to={to}>{product.name}</Link>
         </h3>
-        {product.description && (
+        {/* {product.description && (
           <p className="font-body-sm text-body-sm text-text-secondary mt-1 line-clamp-2">{product.description}</p>
-        )}
+        )} */}
         <div className="mt-auto pt-3">
-          <div className="mt-4 pt-3 border-t border-border-subtle flex items-baseline justify-between gap-2">
+          <div className="border-border-subtle flex items-baseline justify-between gap-2">
             <div>
               <span className="font-headline-sm text-headline-sm text-primary font-bold">
                 {formatPrice(onSale ? product.salePrice : product.price)}
@@ -75,7 +75,7 @@ export default function HomeProductTile({ product, variant = "kitchen", actions 
                 </span>
               )}
             </div>
-            {variant === "home" ? (
+            {/* {variant === "home" ? (
               <div className="flex items-center gap-2">
                 {roundCart}
                 <button
@@ -89,7 +89,7 @@ export default function HomeProductTile({ product, variant = "kitchen", actions 
               </div>
             ) : (
               roundCart
-            )}
+            )} */}
           </div>
           {variant !== "home" && (
             <button

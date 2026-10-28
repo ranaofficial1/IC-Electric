@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../config/navRoutes.js";
-
+import logo from "../../assets/images/logo-white.webp";
 // Footer ported 1:1 from the reference design (code.html).
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-xl">
             <div className="lg:col-span-2 flex flex-col gap-space-md">
               <div className="flex items-center gap-space-md">
-                <img alt="Image" className="h-9 w-auto object-contain p-1" src="https://anuragtraders.com/wp-content/uploads/AGT-White-Logo.webp" />
+                <img alt="Image" className="h-16 w-auto object-contain p-1" src={logo} />
                
               </div>
               <p className="font-body-md text-body-md text-on-primary-container max-w-md">
@@ -125,7 +125,7 @@ export default function Footer() {
           </div>
           <div className="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md text-body-sm font-body-sm text-on-primary-container">
             <p className="">
-              © 2026 Anurag Traders. All rights reserved. Authorized Distributor of Crompton Greaves Consumer Electricals Ltd.
+              © 2026 IC Electricals. All rights reserved. Authorized Distributor of Crompton Greaves Consumer Electricals Ltd.
             </p>
             <div className="flex items-center gap-space-md">
               <Link to={ROUTES["privacy-policy"]} className="hover:text-on-primary transition-colors">

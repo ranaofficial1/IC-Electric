@@ -95,13 +95,13 @@ export default function HeroShowcase() {
                   <span className={`${chipBase} bg-secondary tracking-wider uppercase text-on-secondary`}>
                     Featured Food Prep
                   </span>
-                  <span className={`${chipBase} bg-discount-emerald/20 text-discount-emerald`}>
+                  {/* <span className={`${chipBase} bg-discount-emerald/20 text-discount-emerald`}>
                     {mixerSaving ? `Special Dealer -${mixerSaving.percent}% OFF` : "Special Dealer Price"}
-                  </span>
-                  <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm flex items-center gap-1">
+                  </span> */}
+                  {/* <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm flex items-center gap-1">
                     <span className="material-symbols-outlined text-[13px] sm:text-[15px]">electric_bolt</span>
                     500W Powertron Motor
-                  </span>
+                  </span> */}
                 </div>
                 <h1 className={headline}>
                   Crompton Ameo Neo <br className="hidden sm:block" />
@@ -110,7 +110,7 @@ export default function HeroShowcase() {
                 <p className={`${paragraph} line-clamp-3 sm:line-clamp-none`}>
                   Engineered with heavy-duty copper-wound motors and leak-tight stainless steel jars. Precision grinding for authentic culinary textures with built-in overload protection.
                 </p>
-                {mixer && (
+                {/* {mixer && (
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 pt-1 sm:gap-x-4 sm:pt-2">
                     <span className={priceMain}>{formatPrice(mixer.salePrice ?? mixer.price)}</span>
                     {mixerSaving && (
@@ -120,7 +120,7 @@ export default function HeroShowcase() {
                       </>
                     )}
                   </div>
-                )}
+                )} */}
                 <div className={btnRow}>
                   {mixer ? (
                     <button
@@ -129,7 +129,7 @@ export default function HeroShowcase() {
                       onClick={() => actions.buyNow(mixer)}
                       disabled={actions.isBuying(mixer) || mixer.stock < 1}
                     >
-                      <span className="material-symbols-outlined text-[18px] sm:text-[20px]">shopping_cart</span>
+                      {/* <span className="material-symbols-outlined text-[18px] sm:text-[20px]">shopping_cart</span> */}
                       {mixer.stock < 1 ? "Out of Stock" : actions.isBuying(mixer) ? "Please wait..." : "Buy Now"}
                     </button>
                   ) : (
@@ -138,10 +138,10 @@ export default function HeroShowcase() {
                       Shop Kitchen Appliances
                     </Link>
                   )}
-                  <Link className={btnGhost} to={mixer ? `/product/${mixer.slug}` : "/category/appliances"}>
+                  {/* <Link className={btnGhost} to={mixer ? `/product/${mixer.slug}` : "/category/appliances"}>
                     View Specifications
                     <span className="material-symbols-outlined text-[16px] sm:text-[18px]">arrow_forward</span>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
               <div className={imgCol}>
@@ -151,10 +151,10 @@ export default function HeroShowcase() {
                     alt="Crompton Ameo Neo Kitchen Appliance Slider"
                     className={`${imgHeight} rounded-xl object-cover shadow-lg`}
                     src="https://anuragtraders.com/wp-content/uploads/Crompton-Ameo-Neo-3-Jar-Mixer-1.webp"/>
-                  <div className="absolute bottom-1 right-1 flex items-center gap-1.5 rounded-xl bg-surface-card px-2.5 py-1.5 text-on-surface shadow-lg sm:-bottom-3 sm:-right-3 sm:gap-2 sm:px-4 sm:py-2">
+                  {/* <div className="absolute bottom-1 right-1 flex items-center gap-1.5 rounded-xl bg-surface-card px-2.5 py-1.5 text-on-surface shadow-lg sm:-bottom-3 sm:-right-3 sm:gap-2 sm:px-4 sm:py-2">
                     <span className="material-symbols-outlined text-[16px] text-energy-amber sm:text-[20px]">star</span>
                     <span className="font-title-md text-[11px] sm:text-title-md">Guwahati Ready Stock</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -166,13 +166,13 @@ export default function HeroShowcase() {
                   <span className={`${chipBase} bg-secondary tracking-wider uppercase text-on-secondary`}>
                     Fast Brewing Series
                   </span>
-                  <span className={`${chipBase} bg-discount-emerald/20 text-discount-emerald`}>
+                  {/* <span className={`${chipBase} bg-discount-emerald/20 text-discount-emerald`}>
                     {kettleSaving ? `Dealer Rate -${kettleSaving.percent}%` : "Dealer Rate"}
                   </span>
                   <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm flex items-center gap-1">
                     <span className="material-symbols-outlined text-[13px] sm:text-[15px]">mode_heat</span>
                     1350W Fast Rapid Boil
-                  </span>
+                  </span> */}
                 </div>
                 <h2 className={headline}>
                   ActivHot Cool Touch <br className="hidden sm:block" />
@@ -181,7 +181,7 @@ export default function HeroShowcase() {
                 <p className={`${paragraph} line-clamp-3 sm:line-clamp-none`}>
                   Double-wall insulated cool exterior with seamless 304 food-grade stainless interior. Auto shut-off dry-boil sensor for effortless morning tea and coffee brewing.
                 </p>
-                {kettle && (
+                {/* {kettle && (
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 pt-1 sm:gap-x-4 sm:pt-2">
                     <span className={priceMain}>{formatPrice(kettle.salePrice ?? kettle.price)}</span>
                     {kettleSaving && (
@@ -191,7 +191,7 @@ export default function HeroShowcase() {
                       </>
                     )}
                   </div>
-                )}
+                )} */}
                 <div className={btnRow}>
                   {kettle ? (
                     <button
@@ -200,7 +200,7 @@ export default function HeroShowcase() {
                       onClick={() => actions.buyNow(kettle)}
                       disabled={actions.isBuying(kettle) || kettle.stock < 1}
                     >
-                      <span className="material-symbols-outlined text-[18px] sm:text-[20px]">flash_on</span>
+                      {/* <span className="material-symbols-outlined text-[18px] sm:text-[20px]">flash_on</span> */}
                       {kettle.stock < 1 ? "Out of Stock" : actions.isBuying(kettle) ? "Please wait..." : "Buy Now"}
                     </button>
                   ) : (
@@ -209,9 +209,9 @@ export default function HeroShowcase() {
                       Shop Brewing
                     </Link>
                   )}
-                  <Link className={btnGhost} to="/category/brewing">
+                  {/* <Link className={btnGhost} to="/category/brewing">
                     Explore Brewing Series
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
               <div className={imgCol}>
@@ -222,9 +222,9 @@ export default function HeroShowcase() {
                     className={`${imgHeight} rounded-xl object-contain`}
                     src="https://anuragtraders.com/wp-content/uploads/ActivHot-Cool-Touch-Electric-Kettle-1.webp"
                   />
-                  <div className="absolute left-1 top-1 rounded-lg bg-secondary px-2 py-0.5 text-[10px] font-bold text-on-secondary shadow-md sm:-left-3 sm:-top-3 sm:px-3 sm:py-1 sm:text-label-sm font-label-sm">
+                  {/* <div className="absolute left-1 top-1 rounded-lg bg-secondary px-2 py-0.5 text-[10px] font-bold text-on-secondary shadow-md sm:-left-3 sm:-top-3 sm:px-3 sm:py-1 sm:text-label-sm font-label-sm">
                     Cool-Touch Safety
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -233,12 +233,12 @@ export default function HeroShowcase() {
             <div className={`${slideBase} ${show(3)}`} id="hero-slide-3">
               <div className={textCol}>
                 <div className={chipRow}>
-                  <span className={`${chipBase} bg-energy-amber tracking-wider uppercase text-on-primary`}>
+                  <span className={`${chipBase} bg-secondary tracking-wider uppercase text-on-secondary`}>
                     BLDC Silent Technology
                   </span>
-                  <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm">
+                  {/* <span className="text-on-primary-container text-[10px] sm:text-label-sm font-label-sm">
                     5-Star Energy Saver
-                  </span>
+                  </span> */}
                 </div>
                 <h2 className={headline}>
                   Impart Grandeur To Your <br className="hidden sm:block" />
@@ -250,11 +250,11 @@ export default function HeroShowcase() {
                 <div className={btnRow}>
                   <Link className={btnPrimaryLink} to="/category/fans">
                     Explore Fan Collection
-                    <span className="material-symbols-outlined text-[16px] sm:text-[18px]">east</span>
+                    {/* <span className="material-symbols-outlined text-[16px] sm:text-[18px]">east</span> */}
                   </Link>
-                  <a className={btnGhostAlt} href="#order-form">
+                  {/* <a className={btnGhostAlt} href="#order-form">
                     Download Fan Catalog
-                  </a>
+                  </a> */}
                 </div>
               </div>
               <div className={imgCol}>
@@ -271,12 +271,12 @@ export default function HeroShowcase() {
             <div className={`${slideBase} ${show(4)}`} id="hero-slide-4">
               <div className={textCol}>
                 <div className={chipRow}>
-                  <span className={`${chipBase} bg-secondary-container text-on-secondary-container uppercase tracking-wider`}>
+                  <span className={`${chipBase} bg-secondary tracking-wider uppercase text-on-secondary`}>
                     5-Star Rated Storage
                   </span>
-                  <span className={`${chipBase} bg-primary-container text-on-primary-container font-normal`}>
+                  {/* <span className={`${chipBase} bg-primary-container text-on-primary-container font-normal`}>
                     Anti-Scale Heating Element
-                  </span>
+                  </span> */}
                 </div>
                 <h2 className={headline}>
                   Get Perfect Hot Water <br className="hidden sm:block" />
@@ -288,11 +288,11 @@ export default function HeroShowcase() {
                 <div className={btnRow}>
                   <Link className={btnPrimaryLink} to="/category/water-heaters">
                     Shop Water Heaters
-                    <span className="material-symbols-outlined text-[16px] sm:text-[18px]">water_drop</span>
+                    {/* <span className="material-symbols-outlined text-[16px] sm:text-[18px]">water_drop</span> */}
                   </Link>
-                  <a className={btnGhostAlt} href="#order-form">
+                  {/* <a className={btnGhostAlt} href="#order-form">
                     Wholesale Price List
-                  </a>
+                  </a> */}
                 </div>
               </div>
               <div className={imgCol}>
