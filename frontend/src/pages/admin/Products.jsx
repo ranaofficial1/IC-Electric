@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../../services/api.js";
+import { uploadProductImage } from "../../services/uploadApi.js";
 import { detailsToFieldErrors } from "../../utils/formErrors.js";
 import { formatPrice } from "../../utils/formatPrice.js";
 import TextField from "../../components/ui/TextField.jsx";
@@ -11,6 +12,7 @@ const EMPTY_FORM = {
   slug: "",
   name: "",
   description: "",
+  extraInfo: "",
   categoryId: "",
   subcategoryId: "",
   sku: "",
@@ -64,8 +66,30 @@ function textToSpecs(text) {
   return specs;
 }
 
+// A value may have its own price that REPLACES the product price when selected:
+// "1400mm = 3299" or "1400mm = 3299 / 2999" (price / sale price). Values without
+// "=" keep the product price (e.g. colors).
 function optionsToText(options = []) {
-  return options.map((opt) => `${opt.name}: ${(opt.values || []).join(", ")}`).join("\n");
+  return options
+    .map((opt) => {
+      const values = (opt.values || []).map((value, i) => {
+        const price = opt.prices?.[i];
+        if (price == null) return value;
+        const sale = opt.salePrices?.[i];
+        return `${value} = ${price}${sale != null ? ` / ${sale}` : ""}`;
+      });
+      return `${opt.name}: ${values.join(", ")}`;
+    })
+    .join("\n");
+}
+function parseOptionValue(token) {
+  const match = token.match(/^(.*?)\s*=\s*₹?\s*(\d+(?:\.\d+)?)(?:\s*\/\s*₹?\s*(\d+(?:\.\d+)?))?$/);
+  if (!match || !match[1].trim()) return { value: token, price: null, salePrice: null };
+  return {
+    value: match[1].trim(),
+    price: Number(match[2]),
+    salePrice: match[3] != null ? Number(match[3]) : null,
+  };
 }
 function textToOptions(text) {
   const options = [];
@@ -78,7 +102,15 @@ function textToOptions(text) {
       .split(",")
       .map((v) => v.trim())
       .filter(Boolean);
-    if (name) options.push({ name, values });
+    if (name) {
+      const parsed = values.map(parseOptionValue);
+      options.push({
+        name,
+        values: parsed.map((p) => p.value),
+        prices: parsed.map((p) => p.price),
+        salePrices: parsed.map((p) => p.salePrice),
+      });
+    }
   }
   return options;
 }
@@ -101,10 +133,11 @@ function toForm(product) {
     slug: product.slug,
     name: product.name,
     description: product.description || "",
+    extraInfo: product.extra_info || "",
     categoryId: String(product.category_id),
     subcategoryId: product.subcategory_id ? String(product.subcategory_id) : "",
     sku: product.sku || "",
-    price: product.price,
+    price: product.raw_price > 0 ? product.raw_price : "",
     salePrice: product.sale_price ?? "",
     stock: product.stock,
     isNew: Boolean(product.is_new),
@@ -127,6 +160,8 @@ export default function AdminProducts() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [listError, setListError] = useState("");
+  const [notice, setNotice] = useState("");
+  const [cleaning, setCleaning] = useState(false);
 
   const [formOpen, setFormOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -135,6 +170,10 @@ export default function AdminProducts() {
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  // Photo upload (next to the Image URLs box)
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [uploadColor, setUploadColor] = useState("");
 
   const categories = allCategories.filter((c) => c.depth === 1);
   const subcategoryOptions = descendantsOf(allCategories, form.categoryId);
@@ -213,6 +252,31 @@ export default function AdminProducts() {
     setForm((f) => ({ ...f, [field]: value }));
   }
 
+  // Uploads the chosen photos one by one and appends each to the Image URLs box
+  // (prefixed with "Color | " when a color is typed), exactly as if pasted.
+  async function handlePhotoUpload(event) {
+    const files = Array.from(event.target.files || []);
+    event.target.value = ""; // allow re-picking the same file later
+    if (files.length === 0) return;
+
+    setUploading(true);
+    setUploadError("");
+    const color = uploadColor.trim();
+    const errors = [];
+    for (const file of files) {
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        const url = await uploadProductImage(file);
+        const line = color ? `${color} | ${url}` : url;
+        setForm((f) => ({ ...f, imagesText: f.imagesText.trim() ? `${f.imagesText.trimEnd()}\n${line}` : line }));
+      } catch (err) {
+        errors.push(err.message || `Couldn't upload "${file.name}".`);
+      }
+    }
+    if (errors.length > 0) setUploadError(errors.join(" "));
+    setUploading(false);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     setSubmitting(true);
@@ -223,6 +287,7 @@ export default function AdminProducts() {
       slug: form.slug.trim(),
       name: form.name.trim(),
       description: form.description.trim() || null,
+      extraInfo: form.extraInfo.trim() || null,
       categoryId: Number(form.categoryId),
       subcategoryId: form.subcategoryId ? Number(form.subcategoryId) : null,
       sku: form.sku.trim() || null,
@@ -254,6 +319,34 @@ export default function AdminProducts() {
       }
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  // Deletes uploaded photos that no product/category uses any more (asks first).
+  async function handleCleanupPhotos() {
+    setListError("");
+    setNotice("");
+    setCleaning(true);
+    try {
+      const { data } = await api.get("/uploads/unused");
+      if (data.count === 0) {
+        setNotice("No unused photos — everything uploaded is in use.");
+        return;
+      }
+      const mb = (data.bytes / (1024 * 1024)).toFixed(1);
+      if (
+        !window.confirm(
+          `Delete ${data.count} unused uploaded photo${data.count === 1 ? "" : "s"} (${mb} MB)?\nPhotos not used by any product or category are removed for good. Photos uploaded in the last hour are kept.`
+        )
+      ) {
+        return;
+      }
+      const res = await api.delete("/uploads/unused");
+      setNotice(`Deleted ${res.data.deleted} unused photo${res.data.deleted === 1 ? "" : "s"}.`);
+    } catch (err) {
+      setListError(err.message || "Couldn't clean up photos.");
+    } finally {
+      setCleaning(false);
     }
   }
 
@@ -299,10 +392,16 @@ export default function AdminProducts() {
           </p>
         </div>
         {!formOpen && (
-          <Button variant="primary" size="sm" onClick={openAddForm}>
-            <Icon name="plus" className="text-[14px]" />
-            New Product
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="secondary" size="sm" onClick={handleCleanupPhotos} disabled={cleaning}>
+              <Icon name={cleaning ? "spinner" : "trash"} className={cleaning ? "animate-spin text-[14px]" : "text-[14px]"} />
+              Clean up unused photos
+            </Button>
+            <Button variant="primary" size="sm" onClick={openAddForm}>
+              <Icon name="plus" className="text-[14px]" />
+              New Product
+            </Button>
+          </div>
         )}
       </div>
 
@@ -319,6 +418,12 @@ export default function AdminProducts() {
             <Icon name="search" className="text-[16px]" />
           </Button>
         </form>
+      )}
+
+      {notice && (
+        <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          {notice}
+        </div>
       )}
 
       {listError && (
@@ -444,12 +549,11 @@ export default function AdminProducts() {
                 <TextField
                   id="p-price"
                   type="number"
-                  label="Price (₹)"
+                  label="Price (₹) — leave blank if variants have their own prices"
                   value={form.price}
                   onChange={(e) => updateField("price", e.target.value)}
                   error={fieldErrors.price}
                   min="0"
-                  required
                 />
                 <TextField
                   id="p-sale-price"
@@ -502,6 +606,35 @@ export default function AdminProducts() {
                   placeholder={"Black | https://.../black-1.jpg\nWhite | https://.../white-1.jpg"}
                   className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 font-mono text-xs focus:border-brand-500 focus:outline-none"
                 />
+                <div className="mt-2 flex flex-wrap items-center gap-3">
+                  <label
+                    className={`inline-flex cursor-pointer items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 hover:border-neutral-400 ${
+                      uploading ? "pointer-events-none opacity-60" : ""
+                    }`}
+                  >
+                    <Icon name={uploading ? "spinner" : "plus"} className={uploading ? "animate-spin text-[14px]" : "text-[14px]"} />
+                    {uploading ? "Uploading..." : "Upload photos"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      multiple
+                      onChange={handlePhotoUpload}
+                      disabled={uploading}
+                      className="hidden"
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    value={uploadColor}
+                    onChange={(e) => setUploadColor(e.target.value)}
+                    placeholder="Color for these photos (optional)"
+                    className="w-64 rounded-xl border border-neutral-200 px-4 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <p className="mt-1.5 text-xs text-neutral-400">
+                  Uploaded photos are added to the list above. JPEG, PNG, WebP or GIF, up to 4 MB each.
+                </p>
+                {uploadError && <p className="mt-1.5 text-xs font-medium text-rose-600">{uploadError}</p>}
               </div>
 
               <div>
@@ -520,15 +653,31 @@ export default function AdminProducts() {
 
               <div>
                 <label htmlFor="p-options" className="mb-1.5 block text-sm font-medium text-neutral-700">
-                  Variant options (one per line, "Name: value1, value2, ...")
+                  Variant options (one per line, "Name: value1, value2, ..."). To give a value its own
+                  price (replaces the product price), add "= price" or "= price / sale price", e.g.
+                  "Size: 1200mm = 2999, 1400mm = 3299, 1600mm = 3599 / 3299"
                 </label>
                 <textarea
                   id="p-options"
                   rows={2}
                   value={form.optionsText}
                   onChange={(e) => updateField("optionsText", e.target.value)}
-                  placeholder={"Size: S, M, L, XL\nColor: Black, White"}
+                  placeholder={"Size: 1200mm = 2999, 1400mm = 3299, 1600mm = 3599\nColor: Black, White"}
                   className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 font-mono text-xs focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="p-extra-info" className="mb-1.5 block text-sm font-medium text-neutral-700">
+                  Extra information (optional — shown in an &quot;Additional Info&quot; tab on the product page)
+                </label>
+                <textarea
+                  id="p-extra-info"
+                  rows={4}
+                  value={form.extraInfo}
+                  onChange={(e) => updateField("extraInfo", e.target.value)}
+                  placeholder={"Warranty details, installation notes, what's in the box..."}
+                  className="w-full rounded-xl border border-neutral-200 px-4 py-2.5 text-sm focus:border-brand-500 focus:outline-none"
                 />
               </div>
 

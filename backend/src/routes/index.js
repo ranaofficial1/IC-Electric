@@ -10,6 +10,7 @@ const orderRoutes = require("./orderRoutes");
 const couponRoutes = require("./couponRoutes");
 const adminRoutes = require("./adminRoutes");
 const paymentRoutes = require("./paymentRoutes");
+const uploadRoutes = require("./uploadRoutes");
 
 const router = express.Router();
 
@@ -27,5 +28,6 @@ router.use("/orders", orderRoutes);
 router.use("/coupons", couponRoutes);
 router.use("/payments", paymentRoutes); // /razorpay/order, /razorpay/verify — webhook is mounted directly in app.js (needs raw body)
 router.use("/admin", adminRoutes);
+router.use("/uploads", uploadRoutes); // POST (admin) saves a product photo, GET /:id serves it
 
 module.exports = router;

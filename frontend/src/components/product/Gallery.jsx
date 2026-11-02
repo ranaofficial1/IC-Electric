@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Icon from "../ui/Icon.jsx";
 
-export default function Gallery({ images, alt }) {
+// showThumbnails: keep the thumbnail strip visible even when there is only one
+// image (used for color variants, which often have a single photo each).
+export default function Gallery({ images, alt, showThumbnails = false }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = images[activeIndex] || images[0];
 
@@ -18,7 +20,7 @@ export default function Gallery({ images, alt }) {
         </span>
       </div>
 
-      {images.length > 1 && (
+      {(images.length > 1 || showThumbnails) && (
         <div className="mt-3 grid grid-cols-4 gap-3">
           {images.map((src, index) => (
             <button

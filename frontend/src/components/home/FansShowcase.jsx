@@ -8,12 +8,27 @@ import { formatPrice } from "../../utils/formatPrice.js";
 const FANS_SLUG = "fans";
 const GRID_COLS = { 1: "lg:grid-cols-1", 2: "lg:grid-cols-2", 3: "lg:grid-cols-3" };
 
+// Only these subcategories are shown, in this order.
+// Matched against the category slug or name (case-insensitive), so adjust to your real slugs.
+const VISIBLE_TILES = ["ceiling-fans", "table-fans"];
+
 // Fans collection: the tiles are the real subcategories of the "fans" category
 // (with live product counts and "from" prices); each links to its listing page.
 export default function FansShowcase() {
   const { findCategory } = useCategories();
   const root = findCategory(FANS_SLUG);
-  const tiles = root?.children || [];
+
+  const allChildren = root?.children || [];
+  const tiles = VISIBLE_TILES
+    .map((key) =>
+      allChildren.find(
+        (c) =>
+          c.slug?.toLowerCase() === key ||
+          c.name?.toLowerCase().replace(/\s+/g, "-") === key
+      )
+    )
+    .filter(Boolean);
+
   const { stats } = useCollectionStats(FANS_SLUG, { enabled: Boolean(root) });
 
   return (
@@ -56,7 +71,7 @@ export default function FansShowcase() {
               </div>
             </div>
           </div>
-          {/* Fans collection tiles — real subcategories */}
+          {/* Fans collection tiles — only ceiling and table fans */}
           {tiles.length > 0 && (
             <div className={`grid grid-cols-1 sm:grid-cols-2 ${GRID_COLS[tiles.length] || "lg:grid-cols-4"} gap-6 lg:gap-8`}>
               {tiles.map((tile) => {

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import { useAuth } from "./AuthContext.jsx";
 import * as cartApi from "../services/cartApi.js";
 import { serializeOptions } from "../utils/cartOptions.js";
+import { applyVariantPrice } from "../utils/variantPricing.js";
 
 const CartContext = createContext(null);
 const STORAGE_KEY = "hale_cart_v1";
@@ -134,6 +135,8 @@ export function CartProvider({ children }) {
 
     const lineId = `${product.id}::${serializeOptions(selectedOptions)}`;
     const maxQty = product.stock ?? 99;
+    // Variant pricing: the guest line stores the price of the chosen variant.
+    const variantPrice = applyVariantPrice(product, selectedOptions);
 
     setGuestItems((current) => {
       const existing = current.find((line) => line.lineId === lineId);
@@ -156,8 +159,8 @@ export function CartProvider({ children }) {
           categoryName: product.categoryName,
           categoryIcon: product.categoryIcon,
           categoryAccent: product.categoryAccent,
-          price: product.price,
-          salePrice: product.salePrice,
+          price: variantPrice.price,
+          salePrice: variantPrice.salePrice,
           stock: product.stock,
           selectedOptions,
           quantity: Math.min(maxQty, Math.max(1, quantity)),

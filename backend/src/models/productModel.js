@@ -1,5 +1,6 @@
 const pool = require("../config/db");
 const categoryModel = require("./categoryModel");
+const { MIN_VARIANT_PRICE_SQL, withDisplayPrice } = require("../utils/variantPricing");
 
 // category_* = the product's top-level category; subcategory_* = the more
 // specific node it is filed under (NULL when filed directly on the category).
@@ -9,12 +10,19 @@ const FROM_SQL = `
   LEFT JOIN categories sc ON sc.id = p.subcategory_id
 `;
 
+// The price a product is listed at — same rule as withDisplayPrice(): its own
+// (sale) price, or the cheapest variant price when the product price is blank.
+// Used by the shop's price filter and price sorting so they match what is shown.
+const EFFECTIVE_PRICE_SQL = `(CASE WHEN p.price > 0 THEN COALESCE(p.sale_price, p.price)
+  ELSE COALESCE(${MIN_VARIANT_PRICE_SQL}, COALESCE(p.sale_price, p.price)) END)`;
+
 const BASE_SELECT = `
   SELECT p.*, c.slug AS category_slug, c.name AS category_name,
     c.icon AS category_icon, c.accent_color AS category_accent,
     sc.slug AS subcategory_slug, sc.name AS subcategory_name,
     (SELECT pi.url FROM product_images pi WHERE pi.product_id = p.id ORDER BY pi.sort_order ASC LIMIT 1) AS image,
-    EXISTS(SELECT 1 FROM product_options po WHERE po.product_id = p.id) AS has_options
+    EXISTS(SELECT 1 FROM product_options po WHERE po.product_id = p.id) AS has_options,
+    ${MIN_VARIANT_PRICE_SQL} AS variant_min_price
   ${FROM_SQL}
 `;
 
@@ -61,12 +69,12 @@ async function list({
   }
 
   if (typeof minPrice === "number") {
-    where.push("COALESCE(p.sale_price, p.price) >= ?");
+    where.push(`${EFFECTIVE_PRICE_SQL} >= ?`);
     params.push(minPrice);
   }
 
   if (typeof maxPrice === "number") {
-    where.push("COALESCE(p.sale_price, p.price) <= ?");
+    where.push(`${EFFECTIVE_PRICE_SQL} <= ?`);
     params.push(maxPrice);
   }
 
@@ -77,8 +85,8 @@ async function list({
   const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
 
   const sortMap = {
-    "price-asc": "COALESCE(p.sale_price, p.price) ASC",
-    "price-desc": "COALESCE(p.sale_price, p.price) DESC",
+    "price-asc": `${EFFECTIVE_PRICE_SQL} ASC`,
+    "price-desc": `${EFFECTIVE_PRICE_SQL} DESC`,
     popularity: "p.review_count DESC",
     newest: "p.created_at DESC",
   };
@@ -96,7 +104,7 @@ async function list({
     params
   );
 
-  return { rows, total: count, page, limit };
+  return { rows: rows.map(withDisplayPrice), total: count, page, limit };
 }
 
 async function findBySlug(slug, { publishedOnly = true } = {}) {
@@ -104,14 +112,14 @@ async function findBySlug(slug, { publishedOnly = true } = {}) {
   const [rows] = await pool.query(`${BASE_SELECT} WHERE p.slug = ? ${where} LIMIT 1`, [slug]);
   const product = rows[0];
   if (!product) return null;
-  return attachRelations(product);
+  return attachRelations(withDisplayPrice(product));
 }
 
 async function findById(id) {
   const [rows] = await pool.query(`${BASE_SELECT} WHERE p.id = ? LIMIT 1`, [id]);
   const product = rows[0];
   if (!product) return null;
-  return attachRelations(product);
+  return attachRelations(withDisplayPrice(product));
 }
 
 async function attachRelations(product) {
@@ -124,7 +132,7 @@ async function attachRelations(product) {
     [product.id]
   );
   const [optionRows] = await pool.query(
-    `SELECT po.id, po.name, pov.value
+    `SELECT po.id, po.name, pov.value, pov.price, pov.sale_price
      FROM product_options po
      LEFT JOIN product_option_values pov ON pov.option_id = po.id
      WHERE po.product_id = ?
@@ -134,8 +142,17 @@ async function attachRelations(product) {
 
   const optionsMap = new Map();
   for (const row of optionRows) {
-    if (!optionsMap.has(row.id)) optionsMap.set(row.id, { name: row.name, values: [] });
-    if (row.value) optionsMap.get(row.id).values.push(row.value);
+    if (!optionsMap.has(row.id)) {
+      optionsMap.set(row.id, { name: row.name, values: [], prices: [], salePrices: [] });
+    }
+    if (row.value) {
+      const opt = optionsMap.get(row.id);
+      opt.values.push(row.value);
+      // Parallel to `values`: this value's own price / sale price (null = none),
+      // which replaces the product price when the value is selected.
+      opt.prices.push(row.price != null ? Number(row.price) : null);
+      opt.salePrices.push(row.sale_price != null ? Number(row.sale_price) : null);
+    }
   }
 
   return {
@@ -155,19 +172,28 @@ async function getRelated(product, limit = 4) {
      ORDER BY CASE WHEN p.subcategory_id = ? THEN 0 ELSE 1 END, p.id ASC LIMIT ?`,
     [product.category_id, product.id, product.subcategory_id ?? 0, limit]
   );
-  return rows;
+  return rows.map(withDisplayPrice);
+}
+
+// create() gets camelCase request bodies, update() gets { ...existingRow, ...body },
+// so accept either `extraInfo` (request) or `extra_info` (existing DB row).
+function resolveExtraInfo(data) {
+  const raw = Object.prototype.hasOwnProperty.call(data, "extraInfo") ? data.extraInfo : data.extra_info;
+  const text = raw == null ? "" : String(raw).trim();
+  return text || null;
 }
 
 async function create(data) {
   const [result] = await pool.query(
     `INSERT INTO products
-      (slug, name, description, category_id, subcategory_id, sku, price, sale_price, stock,
+      (slug, name, description, extra_info, category_id, subcategory_id, sku, price, sale_price, stock,
        is_new, is_best_seller, is_featured, is_published)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.slug,
       data.name,
       data.description || null,
+      resolveExtraInfo(data),
       data.categoryId,
       data.subcategoryId ?? null,
       data.sku || null,
@@ -186,7 +212,7 @@ async function create(data) {
 async function update(id, data) {
   await pool.query(
     `UPDATE products SET
-      slug = ?, name = ?, description = ?, category_id = ?, subcategory_id = ?, sku = ?,
+      slug = ?, name = ?, description = ?, extra_info = ?, category_id = ?, subcategory_id = ?, sku = ?,
       price = ?, sale_price = ?, stock = ?, is_new = ?, is_best_seller = ?,
       is_featured = ?, is_published = ?
      WHERE id = ?`,
@@ -194,6 +220,7 @@ async function update(id, data) {
       data.slug,
       data.name,
       data.description || null,
+      resolveExtraInfo(data),
       data.categoryId,
       data.subcategoryId ?? null,
       data.sku || null,
@@ -274,16 +301,25 @@ async function replaceOptions(productId, options = []) {
   await pool.query("DELETE FROM product_options WHERE product_id = ?", [productId]);
 
   for (let i = 0; i < options.length; i += 1) {
-    const { name, values } = options[i];
+    const { name, values, prices, salePrices } = options[i];
     const [result] = await pool.query(
       "INSERT INTO product_options (product_id, name, sort_order) VALUES (?, ?, ?)",
       [productId, name, i]
     );
     if (values && values.length > 0) {
-      const rows = values.map((value, j) => [result.insertId, value, j]);
-      await pool.query("INSERT INTO product_option_values (option_id, value, sort_order) VALUES ?", [
-        rows,
+      // prices[j] / salePrices[j] belong to values[j]; missing/blank → NULL (no own price).
+      const money = (v) => (v == null || v === "" || !Number.isFinite(Number(v)) ? null : Number(v));
+      const rows = values.map((value, j) => [
+        result.insertId,
+        value,
+        money(prices?.[j]),
+        money(salePrices?.[j]),
+        j,
       ]);
+      await pool.query(
+        "INSERT INTO product_option_values (option_id, value, price, sale_price, sort_order) VALUES ?",
+        [rows]
+      );
     }
   }
 }

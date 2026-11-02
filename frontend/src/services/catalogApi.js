@@ -32,6 +32,7 @@ export function mapProduct(row) {
     images: row.images,
     imageOptionValues: row.imageOptionValues,
     description: row.description,
+    extraInfo: row.extra_info ?? null,
     specs: row.specs,
     options: row.options,
     createdAt: row.created_at,

@@ -9,6 +9,7 @@ export default function ProductTabs({ product, reviews }) {
   const TABS = [
     { id: "description", label: "Description" },
     { id: "specifications", label: "Specifications" },
+    ...(product.extraInfo ? [{ id: "extra", label: "Additional Info" }] : []),
     { id: "reviews", label: `Reviews (${product.reviewCount})` },
   ];
 
@@ -46,6 +47,12 @@ export default function ProductTabs({ product, reviews }) {
               </div>
             ))}
           </dl>
+        )}
+
+        {activeTab === "extra" && product.extraInfo && (
+          <p className="max-w-3xl whitespace-pre-line text-sm leading-relaxed text-neutral-600">
+            {product.extraInfo}
+          </p>
         )}
 
         {activeTab === "reviews" && (

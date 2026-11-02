@@ -85,9 +85,65 @@ async function m002ImageOptionValue(conn) {
   }
 }
 
+// 003 — variant pricing: product_option_values.price_adjustment.
+// A signed amount (in rupees) added to the product's price AND sale price when
+// that option value is selected (e.g. Size "1400mm" +300). Existing rows get 0,
+// so every current product keeps the same price for every variant.
+async function m003OptionValuePrice(conn) {
+  if (!(await columnExists(conn, "product_option_values", "price_adjustment"))) {
+    await conn.query(
+      "ALTER TABLE product_option_values ADD COLUMN price_adjustment DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER value"
+    );
+    console.log("  + product_option_values.price_adjustment");
+  }
+}
+
+// 004 — free-text "extra information" per product (products.extra_info).
+// NULL = nothing to show; the product page only shows the tab when it is set.
+async function m004ExtraInfo(conn) {
+  if (!(await columnExists(conn, "products", "extra_info"))) {
+    await conn.query("ALTER TABLE products ADD COLUMN extra_info TEXT NULL AFTER description");
+    console.log("  + products.extra_info");
+  }
+}
+
+// 005 — variant prices are now ABSOLUTE (they replace the product price instead
+// of being added to it): product_option_values.price / sale_price (nullable).
+// NULL = this value has no price of its own. The older price_adjustment column
+// from migration 003 is left in place but no longer used.
+async function m005OptionValueAbsolutePrice(conn) {
+  if (!(await columnExists(conn, "product_option_values", "price"))) {
+    await conn.query("ALTER TABLE product_option_values ADD COLUMN price DECIMAL(10,2) NULL AFTER value");
+    console.log("  + product_option_values.price");
+  }
+  if (!(await columnExists(conn, "product_option_values", "sale_price"))) {
+    await conn.query(
+      "ALTER TABLE product_option_values ADD COLUMN sale_price DECIMAL(10,2) NULL AFTER price"
+    );
+    console.log("  + product_option_values.sale_price");
+  }
+}
+
+// 006 — uploaded_images table for the admin product-photo upload.
+async function m006UploadedImages(conn) {
+  await conn.query(
+    `CREATE TABLE IF NOT EXISTS uploaded_images (
+      id CHAR(32) NOT NULL PRIMARY KEY,
+      mime_type VARCHAR(50) NOT NULL,
+      size_bytes INT UNSIGNED NOT NULL,
+      data MEDIUMBLOB NOT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`
+  );
+}
+
 const MIGRATIONS = [
   ["001_subcategories", m001Subcategories],
   ["002_image_option_value", m002ImageOptionValue],
+  ["003_option_value_price", m003OptionValuePrice],
+  ["004_product_extra_info", m004ExtraInfo],
+  ["005_option_value_absolute_price", m005OptionValueAbsolutePrice],
+  ["006_uploaded_images", m006UploadedImages],
 ];
 
 async function main() {

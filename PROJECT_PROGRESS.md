@@ -1743,3 +1743,19 @@ Node 18+ recommended for both apps (built with Node 22 tooling
 assumptions, but Vite 5 and this Express setup both support Node 18+).
 
 
+
+## Post-redesign update — variant pricing, color thumbnails, extra info
+
+- **Color thumbnails:** `Gallery` takes a `showThumbnails` prop; `ProductDetail` sets it when a color is selected and images are color-tagged, so the thumbnail strip stays visible even if a color has only one image.
+- **Variant pricing:** new `product_option_values.price_adjustment` (migration `003_option_value_price`). A signed rupee amount added to both price and sale price when that value is selected. API exposes it as `options[].priceAdjustments` (parallel to `values`). Server computes it in `backend/src/utils/variantPricing.js`, used by `cartModel.getForUser` and `orderModel.createFromCart`; frontend mirror in `frontend/src/utils/variantPricing.js`. Admin enters it in the Variant options box: `Size: 1200mm, 1400mm +300, 1600mm +600`.
+- **Extra info:** new `products.extra_info` TEXT (migration `004_product_extra_info`), admin textarea in the product form, shown as an "Additional Info" tab only when filled.
+- **Run `npm run db:migrate` in `backend/` once** (or re-run the schema on a fresh DB).
+
+## Product photo upload (admin)
+
+- Admin product form: "Upload photos" button (multiple files, optional color) under the Image URLs box. Each upload is appended to that box as a normal URL line (`Color | url` when a color is typed), so the existing image/color-gallery flow is unchanged.
+- Backend: `POST /api/uploads` (admin only, raw image body, 4 MB max, type checked from the file's bytes — JPEG/PNG/WebP/GIF, no SVG) and public `GET /api/uploads/:id`. No new npm packages. Images live in the new `uploaded_images` table (MEDIUMBLOB), so they persist on any host incl. serverless. Migration `006_uploaded_images` — run `npm run db:migrate`.
+- Frontend shrinks big photos in the browser first (max 1600px, WebP) — `frontend/src/services/uploadApi.js`.
+- Optional env `PUBLIC_API_URL` pins the base of the returned URL (otherwise derived from the request).
+- Not done: deleting unused uploads (orphans stay in the table).
+- Unused-photo clean-up: admin Products page → "Clean up unused photos" (asks for confirmation). `GET/DELETE /api/uploads/unused` (admin) remove `uploaded_images` rows not referenced by `product_images.url` or `categories.image_url/banner_url`; photos younger than 1 hour are always kept. Photos referenced anywhere else (e.g. hard-coded in frontend files) would count as unused.

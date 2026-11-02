@@ -15,6 +15,7 @@ import SectionHeading from "../components/ui/SectionHeading.jsx";
 import { fetchProductBySlug } from "../services/catalogApi.js";
 import { formatPrice } from "../utils/formatPrice.js";
 import { optionsMatch } from "../utils/cartOptions.js";
+import { applyVariantPrice } from "../utils/variantPricing.js";
 import { useCart } from "../context/CartContext.jsx";
 import { useWishlist } from "../context/WishlistContext.jsx";
 
@@ -83,7 +84,10 @@ function ProductDetailView({ product }) {
   const [actionError, setActionError] = useState("");
   const wishlisted = isWishlisted(product.id);
 
-  const onSale = Boolean(product.salePrice);
+  // Variant pricing: the price follows the selected options (e.g. a bigger size
+  // costs more). Products without price adjustments get product.price as before.
+  const { price: unitPrice, salePrice: unitSalePrice } = applyVariantPrice(product, selectedOptions);
+  const onSale = Boolean(unitSalePrice);
   const inStock = product.stock > 0;
   const maxQuantity = Math.min(product.stock || 1, 10);
 
@@ -159,7 +163,12 @@ function ProductDetailView({ product }) {
       />
 
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
-        <Gallery key={selectedColor || "default"} images={galleryImages} alt={product.name} />
+        <Gallery
+          key={selectedColor || "default"}
+          images={galleryImages}
+          alt={product.name}
+          showThumbnails={Boolean(selectedColor) && (product.imageOptionValues || []).some(Boolean)}
+        />
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">
@@ -185,12 +194,12 @@ function ProductDetailView({ product }) {
 
           <div className="mt-5 flex items-center gap-3">
             <span className="font-display text-3xl font-bold text-neutral-900">
-              {formatPrice(onSale ? product.salePrice : product.price)}
+              {formatPrice(onSale ? unitSalePrice : unitPrice)}
             </span>
             {onSale && (
               <>
-                <span className="text-lg text-neutral-400 line-through">{formatPrice(product.price)}</span>
-                <Badge tone="sale">-{Math.round((1 - product.salePrice / product.price) * 100)}%</Badge>
+                <span className="text-lg text-neutral-400 line-through">{formatPrice(unitPrice)}</span>
+                <Badge tone="sale">-{Math.round((1 - unitSalePrice / unitPrice) * 100)}%</Badge>
               </>
             )}
             {!onSale && product.isNew && <Badge tone="new">New</Badge>}

@@ -1,5 +1,6 @@
 const pool = require("../config/db");
 const ApiError = require("../utils/ApiError");
+const variantPricing = require("../utils/variantPricing");
 
 const SELECT_CART = `
   SELECT ci.id, ci.product_id, ci.quantity, ci.selected_options, ci.created_at,
@@ -24,6 +25,7 @@ function normalizeOptions(selectedOptions) {
 
 async function getForUser(userId) {
   const [rows] = await pool.query(SELECT_CART, [userId]);
+  const variantPrices = await variantPricing.loadVariantPrices(rows.map((r) => r.product_id));
 
   return rows.map((row) => {
     let selectedOptions = row.selected_options;
@@ -39,8 +41,11 @@ async function getForUser(userId) {
       }
     }
 
+    // Variant pricing: price/sale_price below are the selected variant's own
+    // price when it has one, so cart totals, checkout and orders all agree.
     return {
       ...row,
+      ...variantPricing.resolvePrice(variantPrices, row, selectedOptions),
       selected_options: selectedOptions,
     };
   });

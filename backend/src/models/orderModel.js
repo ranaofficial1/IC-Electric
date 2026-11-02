@@ -2,6 +2,7 @@ const pool = require("../config/db");
 const ApiError = require("../utils/ApiError");
 const generateOrderNumber = require("../utils/generateOrderNumber");
 const couponModel = require("./couponModel");
+const variantPricing = require("../utils/variantPricing");
 
 const FREE_SHIPPING_THRESHOLD = 999;
 const SHIPPING_FEE = 79;
@@ -38,10 +39,18 @@ async function createFromCart(userId, { shippingAddressId, billingAddressId, cou
       }
     }
 
-    const subtotal = cartRows.reduce(
-      (sum, item) => sum + Number(item.sale_price ?? item.price) * item.quantity,
-      0
+    // Variant pricing: each line's unit price is the selected variant's own
+    // price when it has one, else the product price — computed server-side.
+    const variantPrices = await variantPricing.loadVariantPrices(
+      cartRows.map((item) => item.product_id),
+      connection
     );
+    for (const item of cartRows) {
+      const resolved = variantPricing.resolvePrice(variantPrices, item, item.selected_options);
+      item.unitPrice = Number(resolved.sale_price ?? resolved.price);
+    }
+
+    const subtotal = cartRows.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
 
     let discount = 0;
     let appliedCoupon = null;
@@ -80,7 +89,7 @@ async function createFromCart(userId, { shippingAddressId, billingAddressId, cou
     const orderId = orderResult.insertId;
 
     for (const item of cartRows) {
-  const unitPrice = Number(item.sale_price ?? item.price);
+  const unitPrice = item.unitPrice;
 
   const selectedOptions =
     item.selected_options == null

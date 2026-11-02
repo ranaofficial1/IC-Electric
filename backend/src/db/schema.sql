@@ -97,6 +97,8 @@ CREATE TABLE IF NOT EXISTS products (
   slug VARCHAR(190) NOT NULL UNIQUE,
   name VARCHAR(200) NOT NULL,
   description TEXT NULL,
+  -- Optional free-text "extra information" shown in its own tab on the product page.
+  extra_info TEXT NULL,
   -- category_id is ALWAYS the top-level (root) category. subcategory_id is
   -- the more specific node the product is filed under (NULL = filed directly
   -- on the top-level category). Kept in sync by the API (see categoryTree.js).
@@ -158,6 +160,11 @@ CREATE TABLE IF NOT EXISTS product_option_values (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   option_id INT UNSIGNED NOT NULL,
   value VARCHAR(50) NOT NULL,
+  -- Optional own price for this value: REPLACES the product price (and sale price)
+  -- when selected. NULL = no price of its own. (price_adjustment is legacy/unused.)
+  price DECIMAL(10,2) NULL,
+  sale_price DECIMAL(10,2) NULL,
+  price_adjustment DECIMAL(10,2) NOT NULL DEFAULT 0,
   sort_order INT NOT NULL DEFAULT 0,
   FOREIGN KEY (option_id) REFERENCES product_options(id) ON DELETE CASCADE,
   INDEX idx_product_option_values_option (option_id)
@@ -309,6 +316,19 @@ CREATE TABLE IF NOT EXISTS reviews (
   UNIQUE KEY uq_reviews_user_product (user_id, product_id),
   INDEX idx_reviews_product (product_id),
   INDEX idx_reviews_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ---------------------------------------------------------------------
+-- Uploaded images (admin "Upload photo" in the product form)
+-- Stored in the database so uploads persist on any host (including serverless
+-- hosts with no writable disk). Served by GET /api/uploads/:id.
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS uploaded_images (
+  id CHAR(32) NOT NULL PRIMARY KEY,
+  mime_type VARCHAR(50) NOT NULL,
+  size_bytes INT UNSIGNED NOT NULL,
+  data MEDIUMBLOB NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ---------------------------------------------------------------------

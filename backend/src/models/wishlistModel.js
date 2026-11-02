@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const { MIN_VARIANT_PRICE_SQL, withDisplayPrice } = require("../utils/variantPricing");
 
 const SELECT_WISHLIST = `
   SELECT wi.id, wi.product_id, wi.created_at,
@@ -6,7 +7,8 @@ const SELECT_WISHLIST = `
     c.slug AS category_slug, c.name AS category_name,
     c.icon AS category_icon, c.accent_color AS category_accent,
     (SELECT pi.url FROM product_images pi WHERE pi.product_id = p.id ORDER BY pi.sort_order ASC LIMIT 1) AS image,
-    EXISTS(SELECT 1 FROM product_options po WHERE po.product_id = p.id) AS has_options
+    EXISTS(SELECT 1 FROM product_options po WHERE po.product_id = p.id) AS has_options,
+    ${MIN_VARIANT_PRICE_SQL} AS variant_min_price
   FROM wishlist_items wi
   JOIN products p ON p.id = wi.product_id
   JOIN categories c ON c.id = p.category_id
@@ -16,7 +18,7 @@ const SELECT_WISHLIST = `
 
 async function getForUser(userId) {
   const [rows] = await pool.query(SELECT_WISHLIST, [userId]);
-  return rows;
+  return rows.map(withDisplayPrice);
 }
 
 async function addItem(userId, productId) {
