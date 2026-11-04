@@ -133,7 +133,7 @@ export default function HeroShowcase() {
                       {mixer.stock < 1 ? "Out of Stock" : actions.isBuying(mixer) ? "Please wait..." : "Buy Now"}
                     </button>
                   ) : (
-                    <Link className={btnPrimary} to="/category/appliances">
+                    <Link className={btnPrimary} to="/category/kitchen-appliances">
                       <span className="material-symbols-outlined text-[18px] sm:text-[20px]">shopping_cart</span>
                       Shop Kitchen Appliances
                     </Link>

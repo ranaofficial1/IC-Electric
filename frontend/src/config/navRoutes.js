@@ -15,7 +15,7 @@ export const ROUTES = {
   // category in the admin panel, change this to "/category/home-appliances".
   "home-appliances": "/category/home-appliances",
   "smart-lights": "/category/smart-lights",
-  "air-coolers": "/category/air-coolers",
+  "air-coolers": "/category/coolers",
   "about-us": "/about",
   "contact-us": "/contact",
   "bulk-orders": "/contact",

@@ -11,6 +11,31 @@ export default function SmartLights() {
   const { findCategory } = useCategories();
   const tiles = findCategory(LIGHTS_SLUG)?.children || [];
 
+// Sirf ye 3 categories dikhani hain (is order mein)
+const VISIBLE = ["ceiling lights", "tube lights", "extension board"];
+
+const normalize = (s = "") =>
+  s.toLowerCase().replace(/[-_]/g, " ").replace(/\s+/g, " ").trim();
+
+const visibleTiles = VISIBLE
+  .map((wanted) =>
+    tiles.find((t) => {
+      const name = normalize(t.name);
+      const slug = normalize(t.slug);
+      // exact ya singular/plural dono match ho jayenge
+      return (
+        name === wanted ||
+        slug === wanted ||
+        name === wanted.replace(/s$/, "") ||
+        name + "s" === wanted
+      );
+    })
+  )
+  .filter(Boolean);
+
+console.log("tiles:", tiles.map((t) => ({ name: t.name, slug: t.slug })));
+
+
   return (
     <>
       <section className="w-full px-gutter-mobile sm:px-gutter py-16 sm:py-20 lg:py-24 bg-surface-canvas" id="smart-lights-section">
@@ -71,12 +96,12 @@ export default function SmartLights() {
                   From subtle recessed accents and smooth battens to high-efficiency emergency illumination. Discover Crompton's authorized collection engineered for longevity and optical harmony.
                 </p>
                 <div className="flex items-center gap-4 pt-3 sm:pt-4 flex-wrap">
-                  <a className="inline-flex items-center gap-2 bg-secondary hover:bg-on-secondary-container text-on-secondary px-8 py-3 rounded-full font-label-md text-label-md font-bold transition-all shadow-md" href="#order-form">
+                  <Link className="inline-flex items-center gap-2 bg-secondary hover:bg-on-secondary-container text-on-secondary px-8 py-3 rounded-full font-label-md text-label-md font-bold transition-all shadow-md" to='/category/smart-lights'>
                     Explore Collection 
                     <span className="material-symbols-outlined text-[18px]">
                       arrow_forward
                     </span>
-                  </a>
+                  </Link>
                   
                 </div>
               </div>
@@ -87,9 +112,9 @@ export default function SmartLights() {
             </div>
           </div>
           {/* Lighting collection tiles — real subcategories */}
-          {tiles.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {tiles.map((tile) => {
+          {visibleTiles.length > 0 && (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+    {visibleTiles.map((tile) => {
                 const content = collectionContent(tile.slug);
                 const image = content.image || tile.image;
                 return (
